@@ -200,6 +200,9 @@ body{background:var(--dark);color:#f0f0f0;font-family:var(--fb);min-height:100vh
 .wlb.w.sel{background:#2d6a4f;color:var(--green);}
 .wlb.l{background:rgba(233,69,96,0.07);color:rgba(233,69,96,0.33);}
 .wlb.l.sel{background:rgba(233,69,96,0.22);color:var(--accent);}
+.wlb.b{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.22);}
+.wlb.b.sel{background:rgba(100,130,200,0.2);color:rgba(150,180,255,0.8);}
+
 .rp{background:rgba(0,0,0,0.3);border-radius:3px;padding:10px;margin-top:10px;}
 .rpt{font-family:var(--ff);font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.28);text-transform:uppercase;margin-bottom:5px;}
 .rprow{display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
@@ -514,18 +517,17 @@ const ESPN_IDS={
   'Miami':2390,'Miami (OH)':193,'Michigan':130,'Michigan State':127,'Middle Tennessee':2393,
   'Minnesota':135,'Mississippi State':344,'Missouri':142,'Navy':2445,'Nebraska':158,
   'Nevada':2440,'New Mexico':167,'New Mexico State':2441,'NC State':152,'North Carolina':153,
-  'North Texas':249,'Northwestern':77,'Notre Dame':87,'Ohio':195,'Ohio State':194,
+  'North Texas':249,'Northern Illinois':2459,'Northwestern':77,'Notre Dame':87,'Ohio':195,'Ohio State':194,
   'Oklahoma':201,'Oklahoma State':197,'Ole Miss':145,'Old Dominion':2444,'Oregon':2483,
-  'Penn State':213,'Pittsburgh':221,'Purdue':2585,'Rice':242,'Rutgers':164,
+  'Oregon State':278,'Penn State':213,'Pittsburgh':221,'Purdue':2585,'Rice':242,'Rutgers':164,
   'Sam Houston':2534,'San Diego State':21,'San Jose State':23,'SMU':2567,
   'South Alabama':6,'South Carolina':2579,'South Florida':58,'Southern Miss':2572,
   'Stanford':24,'Syracuse':183,'TCU':2628,'Temple':218,'Tennessee':2633,'Texas':2641,
   'Texas A&M':245,'Texas State':326,'Texas Tech':2640,'Toledo':2649,'Troy':2653,
   'Tulane':2655,'Tulsa':202,'UAB':5765,'UCLA':26,'UCF':2116,'UNLV':2439,'USC':30,
   'UTEP':2638,'UTSA':2636,'Utah':254,'Utah State':328,'Vanderbilt':238,'Virginia':258,
-  'Virginia Tech':259,'Wake Forest':154,'Washington':264,'West Virginia':277,
-  'Western Kentucky':98,'Western Michigan':2711,'Wisconsin':275,'Wyoming':2751,
-  'Akron':2006,'Buffalo':2084,'Illinois':356,'Maryland':120,'Rutgers':164
+  'Virginia Tech':259,'Wake Forest':154,'Washington':264,'Washington State':265,'West Virginia':277,
+  'Western Kentucky':98,'Western Michigan':2711,'Wisconsin':275,'Wyoming':251
 };
 function logoUrl(team){const id=ESPN_IDS[team];return id?`https://a.espncdn.com/i/teamlogos/ncaa/500/${id}.png`:'';}
 function logoImg(team,size=22){const u=logoUrl(team);return u?`<img src="${u}" width="${size}" height="${size}" style="object-fit:contain;flex-shrink:0;border-radius:2px" onerror="this.style.display='none'">`:'<span style="width:'+size+'px;flex-shrink:0"></span>';}
@@ -1012,9 +1014,9 @@ function renderScoreboard(sel){
     const rosterRows=teams.map(t=>{
       const res=mgrTeamRes[t];
       const lg=logoUrl(t);
-      const resHtml=res==='W'?'<span class="tr-result tr-w">W</span>':res==='L'?'<span class="tr-result tr-l">L</span>':'<span class="tr-result tr-none">\u2014</span>';
+      const resHtml=res==='W'?'<span class="tr-result tr-w">W</span>':res==='L'?'<span class="tr-result tr-l">L</span>':res==='B'?'<span class="tr-result" style="background:rgba(100,130,200,0.15);color:rgba(150,180,255,0.7)">BYE</span>':'<span class="tr-result tr-none">&#8212;</span>';
       return `<div class="team-result-row">${lg?`<img src="${lg}" width="16" height="16" style="object-fit:contain;flex-shrink:0" onerror="this.style.display='none'">`:''}
-        <span style="flex:1;color:${res==='W'?'#7bc67e':res==='L'?'rgba(233,69,96,0.8)':'rgba(255,255,255,0.55)'}">${t}</span>${resHtml}</div>`;
+        <span style="flex:1;color:${res==='W'?'#7bc67e':res==='L'?'rgba(233,69,96,0.8)':res==='B'?'rgba(150,180,255,0.6)':'rgba(255,255,255,0.55)'}">${t}</span>${resHtml}</div>`;
     }).join('');
     return `${rank>0?'<div class="vdiv">&middot; &middot; &middot;</div>':''}
     <div class="wrow ${isW?'win-row':'lose-row'}">
