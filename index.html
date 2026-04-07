@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>College Football Challenge 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@400;600&display=swap');
+:root{--gold:#F5C518;--dark:#1a1a2e;--accent:#e94560;--green:#7bc67e;--card:rgba(255,255,255,0.04);--cb:rgba(245,197,24,0.15);--ff:'Oswald',sans-serif;--fb:'Source Sans 3',sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--dark);color:#f0f0f0;font-family:var(--fb);min-height:100vh;}
+.fbg{background:repeating-linear-gradient(180deg,transparent 0,transparent 58px,rgba(255,255,255,0.02) 58px,rgba(255,255,255,0.02) 60px),linear-gradient(180deg,#1a1a2e 0%,#0f3460 100%);min-height:100vh;padding-bottom:60px;}
+/* BANNER */
+.banner{background:linear-gradient(135deg,#7c5c00,#b8860b 30%,#F5C518 50%,#b8860b 70%,#7c5c00);padding:18px 24px;text-align:center;position:relative;overflow:hidden;border-bottom:3px solid rgba(245,197,24,0.5);}
+.banner::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0,transparent 30px,rgba(0,0,0,0.08) 30px,rgba(0,0,0,0.08) 31px);}
+.bi{position:relative;z-index:1;}
+.bt{font-family:var(--ff);font-size:10px;color:rgba(0,0,0,0.55);letter-spacing:3px;text-transform:uppercase;}
+.bn{font-family:var(--ff);font-size:30px;font-weight:700;color:#1a1a00;line-height:1.1;}
+.bs{font-family:var(--ff);font-size:12px;color:rgba(0,0,0,0.5);letter-spacing:2px;margin-top:2px;}
+/* NAV */
+.nav{background:rgba(0,0,0,0.55);border-bottom:1px solid rgba(245,197,24,0.2);display:flex;align-items:center;justify-content:center;padding:0 8px;position:sticky;top:0;z-index:200;backdrop-filter:blur(8px);}
+.logo{font-family:var(--ff);font-size:17px;font-weight:700;color:var(--gold);letter-spacing:1px;padding:13px 0;flex-shrink:0;}
+.logo span{color:#fff;}
+.ntabs{display:flex;overflow-x:auto;scrollbar-width:none;justify-content:center;flex-wrap:nowrap;}
+.ntabs::-webkit-scrollbar{display:none;}
+.ntab{font-family:var(--ff);font-size:11px;font-weight:500;letter-spacing:1px;color:rgba(255,255,255,0.4);padding:15px 10px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;text-transform:uppercase;}
+@media(max-width:600px){.ntab{font-size:10px;padding:14px 7px;letter-spacing:0.5px;}}
+.ntab:hover{color:rgba(255,255,255,0.8);}
+.ntab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.ntab.atab{color:rgba(255,255,255,0.35);font-size:14px;padding:12px 12px;}
+.ntab.atab:hover{color:rgba(233,69,96,0.9);}
+.ntab.atab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.ntab.dtab{color:rgba(123,198,126,0.7);}
+.ntab.dtab.active{color:var(--green);border-bottom-color:var(--green);}
+.content{max-width:1100px;margin:0 auto;padding:20px 12px;}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
+.sh{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.st{font-family:var(--ff);font-size:19px;font-weight:600;color:#fff;letter-spacing:1px;text-transform:uppercase;}
+.sline{flex:1;height:1px;background:rgba(245,197,24,0.15);}
+.sbadge{font-family:var(--ff);font-size:10px;font-weight:600;color:var(--dark);background:var(--gold);padding:3px 9px;border-radius:2px;letter-spacing:1px;white-space:nowrap;}
+/* ═══ DRAFT ═══ */
+.draft-layout{display:grid;grid-template-columns:1fr 260px;gap:16px;}
+@media(max-width:820px){.draft-layout{grid-template-columns:1fr;}}
+.draft-countdown{background:rgba(245,197,24,0.06);border:1px solid rgba(245,197,24,0.2);border-radius:4px;padding:13px 16px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.dc-label{font-family:var(--ff);font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;}
+.dc-date{font-family:var(--ff);font-size:15px;font-weight:600;color:#fff;}
+.dc-time{font-family:var(--ff);font-size:12px;color:rgba(255,255,255,0.45);}
+.dc-status{font-family:var(--ff);font-size:11px;font-weight:600;letter-spacing:1px;padding:3px 8px;border-radius:2px;text-transform:uppercase;}
+.dc-upcoming{background:rgba(245,197,24,0.15);color:var(--gold);}
+.dc-live{background:rgba(123,198,126,0.2);color:var(--green);}
+.dc-done{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);}
+.dc-picks{font-family:var(--ff);font-size:11px;color:rgba(255,255,255,0.4);margin-left:auto;}
+/* draft grid */
+.draft-grid-wrap{overflow-x:auto;margin-bottom:4px;}
+.dg{border-collapse:collapse;width:100%;min-width:480px;}
+.dg th{font-family:var(--ff);font-size:10px;font-weight:600;letter-spacing:1px;color:rgba(255,255,255,0.35);padding:7px 6px;text-align:center;border-bottom:1px solid rgba(245,197,24,0.15);text-transform:uppercase;white-space:nowrap;}
+.dg th:first-child{text-align:left;min-width:46px;}
+.dg td{padding:4px 4px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;vertical-align:middle;}
+.dg td:first-child{font-family:var(--ff);font-size:11px;font-weight:600;color:rgba(255,255,255,0.28);text-align:left;padding-left:6px;}
+.pc{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:3px;padding:4px 4px;min-height:38px;display:flex;flex-direction:column;justify-content:center;align-items:center;}
+.pc.filled{border-color:rgba(245,197,24,0.22);background:rgba(245,197,24,0.04);}
+.pc.filled:hover{border-color:rgba(233,69,96,0.5);background:rgba(233,69,96,0.06);}
+.pc.active-pick{border-color:rgba(123,198,126,0.6);background:rgba(123,198,126,0.07);animation:glow 1.4s ease-in-out infinite;}
+@keyframes glow{0%,100%{border-color:rgba(123,198,126,0.5);}50%{border-color:#7bc67e;box-shadow:0 0 6px rgba(123,198,126,0.3);}}
+.pc-team{font-family:var(--ff);font-size:10px;font-weight:600;color:var(--gold);line-height:1.2;text-align:center;word-break:break-word;}
+.pc-num{font-size:8px;color:rgba(255,255,255,0.18);margin-top:1px;}
+.pc-clock{font-family:var(--ff);font-size:9px;color:var(--green);letter-spacing:0.5px;}
+/* conf list */
+.conf-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;}
+.conf-block{background:var(--card);border:1px solid var(--cb);border-radius:4px;overflow:hidden;}
+.conf-header{background:rgba(0,0,0,0.3);padding:8px 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
+.conf-name{font-family:var(--ff);font-size:12px;font-weight:600;color:var(--gold);letter-spacing:1px;text-transform:uppercase;}
+.conf-count{font-family:var(--ff);font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:1px;}
+.chev{font-size:9px;color:rgba(255,255,255,0.3);transition:transform .2s;}
+.conf-teams-list{display:none;padding:3px 0;}
+.conf-block.open .conf-teams-list{display:block;}
+.conf-block.open .chev{transform:rotate(180deg);}
+.team-row{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;border-bottom:1px solid rgba(255,255,255,0.03);gap:8px;}
+.team-row:last-child{border-bottom:none;}
+.team-row.taken{opacity:0.55;}
+.team-row:hover:not(.taken){background:rgba(255,255,255,0.025);}
+.team-nm{font-size:13px;color:#f0f0f0;}
+.team-row.taken .team-nm{text-decoration:line-through;color:rgba(255,255,255,0.38);}
+.taken-by{font-family:var(--ff);font-size:10px;color:rgba(255,255,255,0.32);}
+.pick-btn{font-family:var(--ff);font-size:10px;font-weight:600;letter-spacing:1px;padding:4px 10px;border-radius:2px;cursor:pointer;border:none;background:rgba(123,198,126,0.18);color:var(--green);transition:all .15s;text-transform:uppercase;flex-shrink:0;white-space:nowrap;}
+.pick-btn:hover{background:rgba(123,198,126,0.32);}
+/* OTC panel */
+.otc-card{background:rgba(123,198,126,0.05);border:1px solid rgba(123,198,126,0.22);border-radius:4px;padding:14px;margin-bottom:12px;}
+.otc-label{font-family:var(--ff);font-size:9px;font-weight:600;letter-spacing:2.5px;color:rgba(123,198,126,0.65);text-transform:uppercase;margin-bottom:5px;}
+.otc-name{font-family:var(--ff);font-size:24px;font-weight:700;color:#fff;line-height:1;}
+.otc-meta{font-family:var(--ff);font-size:11px;color:rgba(255,255,255,0.38);margin-top:3px;}
+.otc-hint{font-family:var(--ff);font-size:11px;color:var(--green);margin-top:5px;}
+.pick-queue{display:flex;flex-direction:column;gap:3px;}
+.pq-row{display:flex;align-items:center;gap:7px;padding:6px 8px;border-radius:3px;border:1px solid transparent;}
+.pq-row.pq-current{background:rgba(123,198,126,0.08);border-color:rgba(123,198,126,0.25);}
+.pq-row.pq-done{opacity:0.35;}
+.pq-row.pq-up{opacity:0.55;}
+.pq-num{font-family:var(--ff);font-size:10px;font-weight:600;color:rgba(255,255,255,0.28);min-width:26px;}
+.pq-row.pq-current .pq-num{color:var(--green);}
+.pq-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--ff);font-size:9px;font-weight:700;flex-shrink:0;}
+.pq-name{font-family:var(--ff);font-size:12px;font-weight:600;color:rgba(255,255,255,0.65);flex:1;}
+.pq-row.pq-current .pq-name{color:#fff;}
+.pq-team{font-size:10px;color:rgba(255,255,255,0.3);text-align:right;}
+.pq-team.picked{color:var(--gold);}
+.search-row{padding:0 0 8px;}
+.srch{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;font-family:var(--fb);font-size:12px;padding:7px 10px;border-radius:3px;outline:none;width:100%;}
+.srch:focus{border-color:var(--gold);}
+.srch::placeholder{color:rgba(255,255,255,0.22);}
+/* Standings */
+.standings-table{width:100%;border-collapse:collapse;}
+.standings-table thead th{font-family:var(--ff);font-size:10px;font-weight:600;color:rgba(255,255,255,0.35);letter-spacing:2px;text-transform:uppercase;padding:9px 10px;text-align:left;border-bottom:1px solid rgba(245,197,24,0.15);}
+.standings-table thead th:not(:first-child){text-align:center;}
+.standings-table tbody tr{border-bottom:1px solid rgba(255,255,255,0.04);transition:background .15s;}
+.standings-table tbody tr:hover{background:rgba(245,197,24,0.04);}
+.standings-table td{padding:11px 10px;}
+.standings-table td:not(:first-child){text-align:center;}
+.rk{display:flex;align-items:center;gap:10px;}
+.rn{font-family:var(--ff);font-size:19px;font-weight:700;color:rgba(255,255,255,0.18);min-width:22px;}
+.r1 .rn{color:var(--gold)}.r2 .rn{color:#C0C0C0}.r3 .rn{color:#CD7F32}
+.av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--ff);font-size:12px;font-weight:700;flex-shrink:0;}
+.av0{background:rgba(233,69,96,0.2);color:#e94560;}
+.av1{background:rgba(90,140,255,0.2);color:#7ab3ff;}
+.av2{background:rgba(123,198,126,0.2);color:#7bc67e;}
+.av3{background:rgba(245,197,24,0.2);color:var(--gold);}
+.av4{background:rgba(200,130,255,0.2);color:#c882ff;}
+.mn{font-family:var(--ff);font-size:15px;font-weight:600;color:#fff;}
+.ms{font-size:11px;color:rgba(255,255,255,0.3);margin-top:1px;}
+.wld{font-family:var(--ff);font-size:16px;font-weight:600;}
+.wc{color:#7bc67e;}.lc{color:rgba(255,255,255,0.26);}
+.sep2{color:rgba(255,255,255,0.18);margin:0 1px;}
+.pbw{display:flex;align-items:center;gap:5px;justify-content:center;}
+.pb{width:46px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;}
+.pf{height:100%;border-radius:2px;background:var(--gold);}
+.pt{font-family:var(--ff);font-size:11px;color:rgba(255,255,255,0.38);min-width:28px;}
+.sk{font-family:var(--ff);font-size:10px;font-weight:600;padding:3px 6px;border-radius:2px;letter-spacing:1px;}
+.sw{background:rgba(123,198,126,0.15);color:#7bc67e;}
+.sl2{background:rgba(233,69,96,0.15);color:#e94560;}
+.ptsc{font-family:var(--ff);font-size:16px;font-weight:600;color:var(--gold);}
+/* Scoreboard */
+.week-sel{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;}
+.wbtn{background:var(--card);border:1px solid var(--cb);color:rgba(255,255,255,0.4);font-family:var(--ff);font-size:10px;font-weight:600;letter-spacing:1px;padding:5px 9px;border-radius:2px;cursor:pointer;transition:all .15s;text-transform:uppercase;}
+.wbtn:hover{color:var(--gold);border-color:var(--gold);}
+.wbtn.active{background:var(--gold);color:#1a1a00;border-color:var(--gold);}
+.wwbar{background:linear-gradient(90deg,rgba(245,197,24,0.12) 0%,transparent 100%);border-left:3px solid var(--gold);padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.wwl{font-family:var(--ff);font-size:10px;font-weight:600;letter-spacing:2px;color:var(--gold);text-transform:uppercase;}
+.wwn{font-family:var(--ff);font-size:15px;font-weight:700;color:#fff;}
+.wws{font-family:var(--ff);font-size:12px;color:rgba(255,255,255,0.4);margin-left:auto;}
+.week-card{background:var(--card);border:1px solid var(--cb);border-radius:4px;overflow:hidden;margin-bottom:10px;}
+.wch{background:rgba(0,0,0,0.3);padding:7px 12px;display:flex;justify-content:space-between;align-items:center;}
+.wchl{font-family:var(--ff);font-size:10px;font-weight:600;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;}
+.wchr{font-family:var(--ff);font-size:10px;font-weight:600;letter-spacing:1px;color:var(--gold);text-transform:uppercase;}
+.wrow{display:flex;align-items:center;padding:11px 12px;border-bottom:1px solid rgba(255,255,255,0.04);gap:8px;}
+.wrow:last-child{border-bottom:none;}
+.wrow.win-row{background:rgba(245,197,24,0.04);}
+.wrow.lose-row{opacity:0.55;}
+.wmgr{display:flex;align-items:center;gap:7px;flex:1;}
+.wname{font-family:var(--ff);font-size:14px;font-weight:600;color:#fff;}
+.wsub{font-size:10px;color:rgba(255,255,255,0.3);}
+.sblk{text-align:right;min-width:72px;}
+.swn{font-family:var(--ff);font-size:22px;font-weight:700;color:#fff;line-height:1;}
+.swn.best{color:var(--gold);}
+.swrc{font-size:10px;color:rgba(255,255,255,0.3);margin-top:1px;}
+.vdiv{text-align:center;padding:2px 0;font-family:var(--ff);font-size:9px;color:rgba(255,255,255,0.1);letter-spacing:2px;border-bottom:1px dashed rgba(255,255,255,0.05);background:rgba(0,0,0,0.1);}
+.no-data{padding:28px;text-align:center;color:rgba(255,255,255,0.28);font-family:var(--ff);font-size:12px;letter-spacing:1px;text-transform:uppercase;}
+/* Rosters */
+.roster-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.roster-grid{grid-template-columns:1fr;}}
+.rc{background:var(--card);border:1px solid var(--cb);border-radius:4px;overflow:hidden;}
+.rch{padding:10px 12px;display:flex;align-items:center;gap:7px;border-bottom:1px solid rgba(245,197,24,0.15);background:rgba(0,0,0,0.2);}
+.rchn{font-family:var(--ff);font-size:15px;font-weight:700;color:#fff;}
+.rchr{font-family:var(--ff);font-size:11px;color:rgba(255,255,255,0.35);margin-left:auto;}
+.tlist{padding:3px 0;}
+.ti{display:flex;align-items:center;gap:0;padding:5px 12px;font-size:12px;border-bottom:1px solid rgba(255,255,255,0.03);}
+.ti:last-child{border-bottom:none;}
+.tnum{font-family:var(--ff);font-size:10px;color:rgba(255,255,255,0.2);min-width:18px;}
+/* Rules */
+.rules-card{background:var(--card);border:1px solid var(--cb);border-radius:4px;padding:18px;}
+.ri{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.ri:last-child{border-bottom:none;}
+.rnum{font-family:var(--ff);font-size:24px;font-weight:700;color:var(--gold);opacity:0.35;min-width:26px;line-height:1.2;}
+.rtitle{font-family:var(--ff);font-size:13px;font-weight:600;color:#fff;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.5px;}
+.rdesc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;}
+/* Admin */
+.admin-card{background:rgba(233,69,96,0.04);border:1px solid rgba(233,69,96,0.2);border-radius:4px;padding:15px;margin-bottom:16px;}
+.admin-card h3{font-family:var(--ff);font-size:12px;font-weight:600;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:11px;padding-bottom:7px;border-bottom:1px solid rgba(233,69,96,0.15);}
+.fr{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin-bottom:8px;}
+.fg{display:flex;flex-direction:column;gap:3px;flex:1;min-width:110px;}
+.flabel{font-family:var(--ff);font-size:9px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,0.32);text-transform:uppercase;}
+.finput{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;font-family:var(--fb);font-size:13px;padding:7px 9px;border-radius:3px;outline:none;width:100%;}
+.finput:focus{border-color:var(--accent);}
+.fsel{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;font-family:var(--fb);font-size:13px;padding:7px 9px;border-radius:3px;outline:none;width:100%;}
+.fsel:focus{border-color:var(--accent);}
+.fsel option{background:#1a1a2e;}
+.btn{font-family:var(--ff);font-size:11px;font-weight:600;letter-spacing:1px;padding:7px 14px;border-radius:3px;cursor:pointer;border:none;transition:all .15s;text-transform:uppercase;}
+.btn-gold{background:var(--gold);color:#1a1a00;}.btn-gold:hover{background:#d4aa14;}
+.btn-accent{background:var(--accent);color:#fff;}.btn-accent:hover{background:#c73550;}
+.btn-ghost{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);}.btn-ghost:hover{color:#fff;background:rgba(255,255,255,0.1);}
+.btn-danger{background:rgba(233,69,96,0.15);border:1px solid rgba(233,69,96,0.3);color:var(--accent);}
+.wl-toggle{display:flex;border-radius:3px;overflow:hidden;border:1px solid rgba(255,255,255,0.12);}
+.wlb{font-family:var(--ff);font-size:10px;font-weight:600;padding:4px 8px;cursor:pointer;transition:all .15s;letter-spacing:1px;}
+.wlb.w{background:rgba(123,198,126,0.08);color:rgba(123,198,126,0.38);}
+.wlb.w.sel{background:#2d6a4f;color:var(--green);}
+.wlb.l{background:rgba(233,69,96,0.07);color:rgba(233,69,96,0.33);}
+.wlb.l.sel{background:rgba(233,69,96,0.22);color:var(--accent);}
+.rp{background:rgba(0,0,0,0.3);border-radius:3px;padding:10px;margin-top:10px;}
+.rpt{font-family:var(--ff);font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.28);text-transform:uppercase;margin-bottom:5px;}
+.rprow{display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.rprow:last-child{border-bottom:none;}
+.rpn{font-family:var(--ff);font-size:13px;color:#fff;}
+.rps{font-family:var(--ff);font-size:13px;color:var(--gold);}
+.note{font-size:11px;color:rgba(255,255,255,0.26);margin-top:5px;line-height:1.5;}
+.divider{height:1px;background:rgba(255,255,255,0.06);margin:10px 0;}
+.roster-expand{display:none;border-top:1px solid rgba(255,255,255,0.06);}
+.roster-expand.open{display:block;}
+.roster-expand-inner{padding:10px 14px 14px;display:grid;grid-template-columns:1fr 1fr;gap:3px 20px;}
+.team-result-row{display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;}
+.team-result-row:last-child{border-bottom:none;}
+.tr-result{font-family:var(--ff);font-size:11px;font-weight:700;padding:2px 7px;border-radius:2px;margin-left:auto;flex-shrink:0;min-width:24px;text-align:center;}
+.tr-w{background:rgba(123,198,126,0.18);color:#7bc67e;}
+.tr-l{background:rgba(233,69,96,0.15);color:#e94560;}
+.tr-none{color:rgba(255,255,255,0.18);}
+.expand-btn{font-family:var(--ff);font-size:10px;font-weight:600;color:rgba(255,255,255,0.4);cursor:pointer;padding:4px 10px;border-radius:3px;border:1px solid rgba(255,255,255,0.12);transition:all .15s;white-space:nowrap;}
+.expand-btn:hover,.expand-btn.active{color:var(--gold);border-color:rgba(245,197,24,0.4);background:rgba(245,197,24,0.05);}
+/* Toast */
+.payout-card{background:var(--card);border:1px solid var(--cb);border-radius:4px;padding:12px 14px;text-align:center;}
+.payout-label{font-family:var(--ff);font-size:9px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:4px;}
+.payout-amount{font-family:var(--ff);font-size:22px;font-weight:700;color:var(--gold);}
+.payout-winner{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;}
+.earnings-total{font-family:var(--ff);font-size:17px;font-weight:700;color:var(--gold);}
+.post-num{font-family:var(--ff);font-size:15px;font-weight:600;color:#fff;text-align:center;}
+.drop-old{text-decoration:line-through;color:rgba(255,255,255,0.4);font-size:12px;}
+.drop-new{color:var(--green);font-size:12px;}
+.drop-rec{font-size:11px;color:rgba(255,255,255,0.3);}
+/* ── Mobile responsive ──────────────────────────────── */
+@media(max-width:600px){
+  .content{padding:14px 10px;}
+  .draft-layout{grid-template-columns:1fr;}
+  .roster-grid{grid-template-columns:1fr;}
+  .standings-table td,.standings-table th{padding:9px 6px;}
+  .rn{font-size:15px;min-width:18px;}
+  .mn{font-size:13px;}
+  .wld{font-size:14px;}
+  .ptsc{font-size:14px;}
+  .sh{flex-wrap:wrap;}
+  .banner .bn{font-size:22px;}
+  .payout-cards{grid-template-columns:repeat(2,1fr)!important;}
+  .conf-list{grid-template-columns:1fr!important;}
+  .draft-grid-wrap{font-size:10px;}
+  .pc{min-height:32px;}
+  .pc-team{font-size:9px;}
+}
+@media(max-width:400px){
+  .ntab{font-size:9px;padding:13px 5px;}
+  .banner .bn{font-size:18px;}
+  .admin-label{display:none;}
+}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:#1e4d35;color:var(--green);font-family:var(--ff);font-size:11px;font-weight:600;letter-spacing:1px;padding:9px 18px;border-radius:3px;text-transform:uppercase;transition:transform .3s;z-index:999;pointer-events:none;border:1px solid rgba(123,198,126,0.3);}
+.toast.show{transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body><div class="fbg">
+
+<!-- BANNER -->
+<div class="banner"><div class="bi">
+  <div class="bt" id="banner-sub-top">College Football Challenge League · 2024 Season</div>
+  <div class="bn" id="banner-champ">Draft Upcoming</div>
+  <div class="bs" id="banner-sub">Set your draft date in Admin</div>
+</div></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div id="nav-logo" style="display:none"></div>
+  <div class="ntabs">
+    <div class="ntab dtab active" id="btn-draft" onclick="showTab('draft',this)">Draft Board</div>
+    <div class="ntab" id="btn-standings" onclick="showTab('standings',this)">Standings</div>
+    <div class="ntab" onclick="showTab('scoreboard',this)">Scoreboard</div>
+    <div class="ntab" onclick="showTab('rosters',this)">Rosters</div>
+    <div class="ntab" onclick="showTab('postseason',this)">Payouts</div>
+    <div class="ntab" onclick="showTab('rules',this)">Rules</div>
+    <div class="ntab atab" onclick="showTab('admin',this)" title="Admin" style="display:flex;align-items:center;gap:4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="admin-label">Admin</span></div>
+  </div>
+</nav>
+
+<div class="content">
+
+<!-- ══ DRAFT ══ -->
+<div class="tab-panel active" id="tab-draft">
+  <div id="countdown-wrap"></div>
+  <div class="draft-layout">
+    <div>
+      <div class="sh"><div class="st">Snake Draft Board</div><div class="sline"></div><div class="sbadge" id="draft-badge">0 / 100 Picks</div></div>
+      <div class="draft-grid-wrap"><table class="dg" id="draft-grid"></table></div>
+      <div class="sh" style="margin-top:20px"><div class="st">FBS Teams by Conference</div><div class="sline"></div><div class="sbadge" id="avail-badge">133 Available</div></div>
+      <div class="search-row"><input class="srch" id="team-search" placeholder="Search all 133 FBS teams..." oninput="renderConfList()"></div>
+      <div class="conf-list" id="conf-list"></div>
+    </div>
+    <div>
+      <div class="sh"><div class="st">On The Clock</div><div class="sline"></div></div>
+      <div id="otc-panel"></div>
+      <div id="edit-pick-panel"></div>
+      <div class="pick-queue" id="pick-queue" style="display:none"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STANDINGS ══ -->
+<div class="tab-panel" id="tab-standings">
+  <div class="sh"><div class="st">Season Standings</div><div class="sline"></div><div class="sbadge" id="stand-badge">Overall</div></div>
+  <div class="week-sel" id="stand-filter-btns" style="margin-bottom:16px"></div>
+  <div style="overflow-x:auto">
+    <table class="standings-table" style="min-width:560px"><thead><tr>
+      <th>Manager</th>
+      <th id="wl-col-header">Team W–L</th>
+      <th>Weekly Wins</th>
+      <th>Win %</th>
+      <th>Streak</th>
+      <th>Pts</th>
+    </tr></thead><tbody id="stand-body"></tbody></table>
+  </div>
+</div>
+
+<!-- ══ SCOREBOARD ══ -->
+<div class="tab-panel" id="tab-scoreboard">
+  <div class="sh"><div class="st">Scoreboard</div><div class="sline"></div><div class="sbadge">Select Week</div></div>
+  <div class="week-sel" id="week-btns"></div>
+  <div id="score-cont"><div class="no-data">No weeks scored yet</div></div>
+</div>
+
+<!-- ══ ROSTERS ══ -->
+<div class="tab-panel" id="tab-rosters">
+  <div class="sh"><div class="st">Rosters</div><div class="sline"></div><div class="sbadge">2026 Draft</div></div>
+  <div class="roster-grid" id="roster-grid"></div>
+</div>
+
+<!-- ══ RULES ══ -->
+<div class="tab-panel" id="tab-rules">
+  <div class="sh"><div class="st">League Rules</div><div class="sline"></div><div class="sbadge">Official</div></div>
+  <div class="rules-card">
+    <div class="ri"><div class="rnum">01</div><div><div class="rtitle">Snake Draft</div><div class="rdesc">All managers participate in a snake draft, each selecting 20 college football teams (100 picks total). Draft order reverses each round (1-2-3-4-5, 5-4-3-2-1…). Your 20 teams are locked for the entire season.</div></div></div>
+    <div class="ri"><div class="rnum">02</div><div><div class="rtitle">Weekly Scoring</div><div class="rdesc">Each week, every win recorded by one of your 20 teams scores a point. The manager whose teams record the most combined wins that week earns 1 win in the season standings.</div></div></div>
+    <div class="ri"><div class="rnum">03</div><div><div class="rtitle">Tiebreaker</div><div class="rdesc">Ties broken by total point differential across all your teams' games that week. If still tied, the week is split and both managers receive 0.5 wins.</div></div></div>
+    <div class="ri"><div class="rnum">04</div><div><div class="rtitle">Season Champion</div><div class="rdesc">Most weekly wins after the regular season wins the title and earns first pick in next year's draft.</div></div></div>
+    <div class="ri"><div class="rnum">05</div><div><div class="rtitle">Bowl Bonus</div><div class="rdesc">Bowl wins = 1 pt. CFP Semifinal wins = 2 pts. National Championship win = 3 pts. Bowl champion earns eternal bragging rights.</div></div></div>
+  </div>
+</div>
+
+<!-- ══ POSTSEASON ══ -->
+<div class="tab-panel" id="tab-postseason">
+  <div class="sh"><div class="st">Payouts & Postseason</div><div class="sline"></div><div class="sbadge" id="pot-badge">$0 Pot</div></div>
+
+  <!-- Payout summary cards -->
+  <div id="payout-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:20px"></div>
+
+  <!-- Postseason scoring table -->
+  <div class="sh" style="margin-top:4px"><div class="st" style="font-size:15px">Postseason Scoring</div><div class="sline"></div></div>
+  <div style="overflow-x:auto">
+    <table class="standings-table" id="postseason-table">
+      <thead><tr>
+        <th>Manager</th>
+        <th>Conf Champs</th>
+        <th>Playoff Teams</th>
+        <th>QF Wins</th>
+        <th>SF Wins</th>
+        <th>Natl Champ</th>
+        <th>Post Pts</th>
+        <th>Total Earnings</th>
+      </tr></thead>
+      <tbody id="postseason-body"></tbody>
+    </table>
+  </div>
+
+  <!-- The Drop -->
+  <div class="sh" style="margin-top:24px"><div class="st" style="font-size:15px">The Drop</div><div class="sline"></div><div class="sbadge" id="drop-badge">Week 4</div></div>
+  <div id="drop-table-wrap">
+    <table class="standings-table" id="drop-table">
+      <thead><tr><th>Manager</th><th>Dropped Team</th><th>Record at Drop</th><th>Added Team</th><th>Record After</th></tr></thead>
+      <tbody id="drop-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ ADMIN ══ -->
+<div class="tab-panel" id="tab-admin">
+  <div class="sh"><div class="st" style="color:var(--accent)">Admin Panel</div><div class="sline" style="background:rgba(233,69,96,0.2)"></div><div class="sbadge" style="background:var(--accent)">Hidden</div></div>
+  <div id="storage-status" style="font-family:var(--ff);font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:1px;margin-bottom:14px;text-align:right"></div>
+
+  <div class="admin-card" style="border-color:rgba(245,197,24,0.3);background:rgba(245,197,24,0.04)">
+    <h3 style="color:var(--gold)">Data Backup</h3>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+      <button class="btn btn-gold" onclick="exportData()">⬇ Export JSON</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('import-file').click()">⬆ Import JSON</button>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
+    </div>
+    <p class="note">Data auto-syncs to the cloud — all your friends see updates within 30 seconds. Export saves a <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;font-size:11px">.json</code> backup to your device. Import restores from any backup file.</p>
+  </div>
+
+  <div class="admin-card" style="border-color:rgba(123,198,126,0.3);background:rgba(123,198,126,0.04)">
+    <h3 style="color:var(--green)">Demo Mode</h3>
+    <p class="note" style="margin-bottom:12px">Fills all 100 draft picks with real teams and simulates a full week of scores so you can rehearse the full app experience. All demo data is clearly marked and can be cleared instantly.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" style="background:rgba(123,198,126,0.2);color:var(--green);border:1px solid rgba(123,198,126,0.3)" onclick="runDemoMode()">▶ Run Full Demo</button>
+      <button class="btn" style="background:rgba(123,198,126,0.1);color:var(--green);border:1px solid rgba(123,198,126,0.2)" onclick="demoDraftOnly()">▶ Draft Only</button>
+      <button class="btn" style="background:rgba(123,198,126,0.1);color:var(--green);border:1px solid rgba(123,198,126,0.2)" onclick="demoWeekOnly()">▶ Simulate Week</button>
+      <button class="btn btn-danger" onclick="clearDemo()">✕ Clear Demo</button>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <h3>League & Draft Settings</h3>
+    <div class="fr">
+      <div class="fg"><div class="flabel">League Name</div><input class="finput" id="a-lname" placeholder="College Football Challenge"></div>
+      <div class="fg" style="max-width:88px"><div class="flabel">Year</div><input class="finput" id="a-year" placeholder="2026"></div>
+      <div class="fg" style="max-width:80px"><div class="flabel">Weeks</div><input class="finput" id="a-weeks" type="number" placeholder="14" min="1" max="20"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><div class="flabel">Draft Date</div><input class="finput" id="a-date" type="date"></div>
+      <div class="fg"><div class="flabel">Draft Time</div><input class="finput" id="a-time" type="time"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><div class="flabel">App Mode</div>
+        <select class="fsel" id="a-mode">
+          <option value="preseason">Preseason — Show Draft Board first</option>
+          <option value="season">In-Season — Show Standings first</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+      <button class="btn btn-gold" onclick="saveLeagueSettings()">Save Settings</button>
+      <button class="btn btn-danger" onclick="doResetDraft()">Reset Entire Draft</button>
+      <button class="btn btn-danger" onclick="clearAllData()">Clear All Data</button>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <h3>Manager Names</h3>
+    <div id="a-mgr-names"></div>
+    <button class="btn btn-gold" onclick="saveMgrNames()" style="margin-top:8px">Save Names</button>
+    <p class="note">Managers draft in listed order. Snake reverses each round.</p>
+  </div>
+
+  <div class="admin-card">
+    <h3>Make a Draft Pick</h3>
+    <div id="a-draft-status" style="margin-bottom:10px"></div>
+    <div class="fr">
+      <div class="fg"><div class="flabel">Conference</div><select class="fsel" id="a-conf" onchange="refreshPickTeams()"></select></div>
+      <div class="fg"><div class="flabel">Team</div><select class="fsel" id="a-team"></select></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+      <button class="btn btn-gold" onclick="adminPick()">✓ Confirm Pick</button>
+      <button class="btn btn-danger" onclick="undoPick()">↩ Undo Last Pick</button>
+    </div>
+    <p class="note">Use this to make picks on behalf of managers during live draft. The Pick Buttons in the conference list also work.</p>
+  </div>
+
+  <div class="admin-card">
+    <h3>Enter Weekly Scores</h3>
+    <div class="fr"><div class="fg" style="max-width:100px"><div class="flabel">Week #</div><input class="finput" id="a-week-num" type="number" min="1" max="20" placeholder="1" onchange="buildScoreRows()"></div></div>
+    <div class="divider"></div>
+    <div id="a-score-rows"></div>
+    <div class="rp" id="a-preview" style="display:none"><div class="rpt">Week Preview</div><div id="a-preview-rows"></div></div>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+      <button class="btn btn-gold" onclick="submitScores()">Save Week Results</button>
+      <button class="btn btn-ghost" onclick="clearScores()">Clear</button>
+    </div>
+    <p class="note">Toggle W or L for each team. Untoggled = bye week (no game, no points).</p>
+  </div>
+
+  <div class="admin-card">
+    <h3>Money & Payouts</h3>
+    <div class="fr">
+      <div class="fg" style="max-width:110px"><div class="flabel">Entry Fee ($)</div><input class="finput" id="a-entry-fee" type="number" min="0" placeholder="304"></div>
+    </div>
+    <div style="margin-top:10px">
+      <div class="flabel" style="margin-bottom:6px">Payout Structure ($)</div>
+      <div id="payout-inputs"></div>
+    </div>
+    <button class="btn btn-gold" onclick="saveMoneySettings()" style="margin-top:10px">Save Money Settings</button>
+    <p class="note">Set how much each category pays out. These drive the Postseason tab earnings.</p>
+  </div>
+
+  <div class="admin-card">
+    <h3>Postseason Scoring</h3>
+    <p class="note" style="margin-bottom:10px">Enter how many conf champs, playoff teams, and CFP wins each manager has.</p>
+    <div id="postseason-inputs"></div>
+    <button class="btn btn-gold" onclick="savePostseason()" style="margin-top:10px">Save Postseason</button>
+  </div>
+
+  <div class="admin-card">
+    <h3>The Drop</h3>
+    <div class="fr">
+      <div class="fg" style="max-width:100px"><div class="flabel">After Week #</div><input class="finput" id="a-drop-week" type="number" min="1" max="20" placeholder="4"></div>
+    </div>
+    <div style="margin-top:10px" id="drop-inputs"></div>
+    <button class="btn btn-gold" onclick="saveDrop()" style="margin-top:10px">Save Drop</button>
+    <p class="note">Each manager can drop one team and add one replacement after the configured week.</p>
+  </div>
+</div>
+
+</div></div>
+<div class="toast" id="toast"></div>
+<script>
+// ═══════════════════ FBS DATA ═══════════════════════════
+// ESPN team ID lookup — used for logos: https://a.espncdn.com/i/teamlogos/ncaa/500/{id}.png
+const ESPN_IDS={
+  'Air Force':2005,'Akron':2006,'Alabama':333,'Appalachian State':2026,'Arizona':12,'Arizona State':9,
+  'Arkansas':8,'Arkansas State':2032,'Army':349,'Auburn':2,'Ball State':2050,'Baylor':239,
+  'Boise State':68,'Boston College':103,'Bowling Green':189,'Buffalo':2084,'BYU':252,
+  'California':25,'Central Michigan':2117,'Charlotte':2429,'Cincinnati':2132,'Clemson':228,
+  'Coastal Carolina':324,'Colorado':38,'Colorado State':36,'Connecticut':41,'Duke':150,
+  'East Carolina':151,'Eastern Michigan':2199,'FIU':2229,'Florida':57,'Florida Atlantic':2226,
+  'Florida State':52,'Fresno State':278,'Georgia':61,'Georgia Southern':2241,'Georgia State':2247,
+  'Georgia Tech':59,'Hawaii':62,'Houston':248,'Illinois':356,'Indiana':84,'Iowa':2294,
+  'Iowa State':66,'Jacksonville State':55,'James Madison':256,'Kansas':2305,'Kansas State':2306,
+  'Kennesaw State':338,'Kent State':2309,'Kentucky':96,'Liberty':2335,'Louisiana':309,
+  'Louisiana Monroe':2433,'Louisville':97,'LSU':99,'Marshall':276,'Maryland':120,'Memphis':235,
+  'Miami':2390,'Miami (OH)':193,'Michigan':130,'Michigan State':127,'Middle Tennessee':2393,
+  'Minnesota':135,'Mississippi State':344,'Missouri':142,'Navy':2445,'Nebraska':158,
+  'Nevada':2440,'New Mexico':167,'New Mexico State':2441,'NC State':152,'North Carolina':153,
+  'North Texas':249,'Northwestern':77,'Notre Dame':87,'Ohio':195,'Ohio State':194,
+  'Oklahoma':201,'Oklahoma State':197,'Ole Miss':145,'Old Dominion':2444,'Oregon':2483,
+  'Penn State':213,'Pittsburgh':221,'Purdue':2585,'Rice':242,'Rutgers':164,
+  'Sam Houston':2534,'San Diego State':21,'San Jose State':23,'SMU':2567,
+  'South Alabama':6,'South Carolina':2579,'South Florida':58,'Southern Miss':2572,
+  'Stanford':24,'Syracuse':183,'TCU':2628,'Temple':218,'Tennessee':2633,'Texas':2641,
+  'Texas A&M':245,'Texas State':326,'Texas Tech':2640,'Toledo':2649,'Troy':2653,
+  'Tulane':2655,'Tulsa':202,'UAB':5765,'UCLA':26,'UCF':2116,'UNLV':2439,'USC':30,
+  'UTEP':2638,'UTSA':2636,'Utah':254,'Utah State':328,'Vanderbilt':238,'Virginia':258,
+  'Virginia Tech':259,'Wake Forest':154,'Washington':264,'West Virginia':277,
+  'Western Kentucky':98,'Western Michigan':2711,'Wisconsin':275,'Wyoming':2751,
+  'Akron':2006,'Buffalo':2084,'Illinois':356,'Maryland':120,'Rutgers':164
+};
+function logoUrl(team){const id=ESPN_IDS[team];return id?`https://a.espncdn.com/i/teamlogos/ncaa/500/${id}.png`:'';}
+function logoImg(team,size=22){const u=logoUrl(team);return u?`<img src="${u}" width="${size}" height="${size}" style="object-fit:contain;flex-shrink:0;border-radius:2px" onerror="this.style.display='none'">`:'<span style="width:'+size+'px;flex-shrink:0"></span>';}
+
+const FBS=[
+  {conf:'SEC',teams:['Alabama','Arkansas','Auburn','Florida','Georgia','Kentucky','LSU','Mississippi State','Missouri','Oklahoma','Ole Miss','South Carolina','Tennessee','Texas','Texas A&M','Vanderbilt']},
+  {conf:'Big Ten',teams:['Illinois','Indiana','Iowa','Maryland','Michigan','Michigan State','Minnesota','Nebraska','Northwestern','Ohio State','Oregon','Penn State','Purdue','Rutgers','UCLA','USC','Washington','Wisconsin']},
+  {conf:'Big 12',teams:['Arizona','Arizona State','Baylor','BYU','Cincinnati','Colorado','Houston','Iowa State','Kansas','Kansas State','Oklahoma State','TCU','Texas Tech','UCF','Utah','West Virginia']},
+  {conf:'ACC',teams:['Boston College','California','Clemson','Duke','Florida State','Georgia Tech','Louisville','Miami','NC State','North Carolina','Notre Dame','Pittsburgh','SMU','Stanford','Syracuse','Virginia','Virginia Tech','Wake Forest']},
+  {conf:'Mountain West',teams:['Air Force','Boise State','Colorado State','Fresno State','Hawaii','Nevada','New Mexico','San Diego State','San Jose State','UNLV','Utah State','Wyoming']},
+  {conf:'American (AAC)',teams:['Army','Charlotte','East Carolina','Florida Atlantic','Memphis','Navy','North Texas','Rice','South Florida','Temple','Tulane','Tulsa','UAB','UTSA']},
+  {conf:'Sun Belt',teams:['Appalachian State','Arkansas State','Coastal Carolina','Georgia Southern','Georgia State','James Madison','Louisiana','Louisiana Monroe','Marshall','Old Dominion','South Alabama','Southern Miss','Texas State','Troy']},
+  {conf:'Conference USA',teams:['FIU','Jacksonville State','Kennesaw State','Liberty','Middle Tennessee','New Mexico State','Sam Houston','UTEP','Western Kentucky']},
+  {conf:'MAC',teams:['Akron','Ball State','Bowling Green','Buffalo','Central Michigan','Eastern Michigan','Kent State','Miami (OH)','Northern Illinois','Ohio','Toledo','Western Michigan']},
+  {conf:'Independents',teams:['Connecticut','Liberty','New Mexico State','Notre Dame']}
+];
+
+// ═══════════════════ SUPABASE CONFIG ════════════════════
+const SB_URL='https://hwdqurdjhvrezftiyfhs.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh3ZHF1cmRqaHZyZXpmdGl5ZmhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4Nzg3MzksImV4cCI6MjA5MDQ1NDczOX0.yU_Et3EWLawkv--LkZd55h6f7gks7O2dKQmQkkfR5SI';
+const SB_ROW_ID=1; // single row stores entire league state
+
+const DEFAULT_S={
+  leagueName:'College Football Challenge',seasonYear:'2026',totalWeeks:14,
+  mode:'preseason',draftDate:'',draftTime:'',
+  managers:['Mike Davidson','Sarah Lopes','Jake Ramos','Derek Kim','Lena Walsh'],
+  rosters:[[],[],[],[],[]],
+  picks:[],
+  weekResults:{},currentWeek:0,
+  entryFee:304,
+  payouts:{weeklyWin:20,mostWins:300,secondWins:100,confChamp:25,playoffTeam:20,qfWin:30,sfWin:60,natChamp:135},
+  postseason:[[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]],
+  dropWeek:4,
+  drops:[null,null,null,null,null],
+  teamResults:{}
+};
+
+function mergeState(saved){
+  const merged=Object.assign({},DEFAULT_S,saved);
+  if(!merged.postseason||merged.postseason.length!==merged.managers.length)
+    merged.postseason=merged.managers.map(()=>[0,0,0,0,0]);
+  if(!merged.drops||merged.drops.length!==merged.managers.length)
+    merged.drops=merged.managers.map(()=>null);
+  if(!merged.payouts)merged.payouts=Object.assign({},DEFAULT_S.payouts);
+  return merged;
+}
+
+// ── Supabase fetch helpers ────────────────────────────────
+async function sbFetch(path,opts={}){
+  const sep=path.includes('?')?'&':'?';
+  const url=SB_URL+'/rest/v1/'+path+sep+'apikey='+SB_KEY;
+  const headers={
+    'apikey':SB_KEY,
+    'Authorization':'Bearer '+SB_KEY,
+    'Content-Type':'application/json',
+    'Prefer':'return=representation',
+    ...(opts.headers||{})
+  };
+  const res=await fetch(url,{...opts,headers});
+  if(!res.ok){const t=await res.text();throw new Error(res.status+': '+t);}
+  const text=await res.text();
+  return text?JSON.parse(text):[];
+}
+
+async function loadStateFromDB(){
+  try{
+    const rows=await sbFetch('league_state?id=eq.'+SB_ROW_ID+'&select=data');
+    if(rows&&rows.length&&rows[0].data) return mergeState(rows[0].data);
+  }catch(e){console.warn('DB load failed, using defaults',e);}
+  return Object.assign({},DEFAULT_S);
+}
+
+async function saveState(){
+  try{
+    // upsert: insert row id=1 or update if exists
+    await sbFetch('league_state',{
+      method:'POST',
+      headers:{'Prefer':'resolution=merge-duplicates'},
+      body:JSON.stringify({id:SB_ROW_ID,data:S})
+    });
+    setSyncStatus('saved');
+  }catch(e){
+    console.error('DB save failed',e);
+    setSyncStatus('error');
+    // fallback to localStorage so no data is lost
+    try{localStorage.setItem('cfc_fallback',JSON.stringify(S));}catch(_){}
+  }
+}
+
+function setSyncStatus(state){
+  const el=document.getElementById('storage-status');
+  if(!el)return;
+  const now=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+  if(state==='saving') el.innerHTML='<span style="color:rgba(245,197,24,0.6)">⟳ Saving...</span>';
+  else if(state==='saved') el.innerHTML='<span style="color:rgba(123,198,126,0.7)">✓ Synced to cloud · '+now+'</span>';
+  else if(state==='loaded') el.innerHTML='<span style="color:rgba(123,198,126,0.7)">✓ Loaded from cloud · '+now+'</span>';
+  else if(state==='error') el.innerHTML='<span style="color:rgba(233,69,96,0.8)">⚠ Sync failed — check console</span>';
+}
+
+// wrap saveState to show saving indicator
+const _origSave=saveState;
+async function saveStateWithFeedback(){
+  setSyncStatus('saving');
+  await saveState();
+}
+
+// ── Init: load from DB, then render ──────────────────────
+let S=Object.assign({},DEFAULT_S); // temp until async load
+const STORE_KEY='cfc_fallback'; // kept for export/import localStorage fallback
+const TOTAL=100;
+let scoreState={};
+
+// ═══════════════════ UTILS ══════════════════════════════
+const ini=n=>n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+const avc=i=>'av av'+i;
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+function pickMgr(num){const n=S.managers.length,z=num-1,r=Math.floor(z/n),p=z%n;return r%2===0?p:(n-1-p);}
+const curPick=()=>S.picks.length+1;
+const draftDone=()=>S.picks.length>=TOTAL;
+function teamOwner(t){const p=S.picks.find(x=>x.team===t);return p!=null?p.mgrIdx:-1;}
+function getRecord(i){let w=0,l=0;Object.values(S.weekResults).forEach(wk=>{const my=wk[i]||0,mx=Math.max(...Object.values(wk));if(my===mx)w++;else l++;});return{w,l};}
+function getStreak(i){const wks=Object.keys(S.weekResults).map(Number).sort((a,b)=>b-a);if(!wks.length)return{t:'',n:0};let t=null,n=0;for(const wk of wks){const d=S.weekResults[wk],my=d[i]||0,mx=Math.max(...Object.values(d)),won=my===mx;if(!t){t=won?'W':'L';n=1;}else if((t==='W'&&won)||(t==='L'&&!won))n++;else break;}return{t,n};}
+function getPts(i){return Object.values(S.weekResults).reduce((s,wk)=>s+(wk[i]||0),0);}
+
+function getTeamRecord(mgrIdx, teamName){
+  // aggregate W-L for a specific team across all weeks
+  let w=0,l=0;
+  const tr=S.teamResults||{};
+  Object.values(tr).forEach(wk=>{
+    const mgr=wk[mgrIdx]||{};
+    if(mgr[teamName]==='W')w++;
+    else if(mgr[teamName]==='L')l++;
+  });
+  return{w,l};
+}
+
+// ═══════════════════ DRAFT ══════════════════════════════
+function renderDraft(){
+  renderCountdown();
+  renderGrid();
+  renderConfList();
+  renderOTC();
+  document.getElementById('draft-badge').textContent=`${S.picks.length} / ${TOTAL} Picks`;
+}
+
+function renderCountdown(){
+  const w=document.getElementById('countdown-wrap');
+  if(!S.draftDate){w.innerHTML='';return;}
+  const dt=new Date(S.draftDate+'T'+(S.draftTime||'12:00'));
+  const diff=dt-new Date();
+  let sc,sh;
+  if(draftDone()){sc='dc-done';sh='Draft Complete';}
+  else if(diff<0){sc='dc-live';sh='● LIVE';}
+  else{const d=Math.floor(diff/864e5),h=Math.floor(diff%864e5/36e5),m=Math.floor(diff%36e5/6e4);sc='dc-upcoming';sh=d>0?`In ${d}d ${h}h`:`In ${h}h ${m}m`;}
+  const ds=dt.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  const ts=S.draftTime?dt.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):'';
+  w.innerHTML=`<div class="draft-countdown"><div><div class="dc-label">Draft Day</div><div class="dc-date">${ds}</div>${ts?`<div class="dc-time">${ts}</div>`:''}</div><span class="dc-status ${sc}">${sh}</span><div class="dc-picks">${S.picks.length}/${TOTAL} picks made</div></div>`;
+}
+
+function renderGrid(){
+  const n=S.managers.length,rds=20;
+  let h='<thead><tr><th>Rd</th>';
+  S.managers.forEach((m,i)=>h+=`<th><div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div class="${avc(i)}" style="width:22px;height:22px;font-size:8px">${ini(m)}</div><span style="font-size:8px;color:rgba(255,255,255,0.45)">${m.split(' ')[0]}</span></div></th>`);
+  h+='</tr></thead><tbody>';
+  for(let r=0;r<rds;r++){
+    h+=`<tr><td>R${r+1}</td>`;
+    for(let col=0;col<n;col++){
+      const pNum=r*n+col+1;
+      const mIdx=pickMgr(pNum);
+      // which round is this for that manager?
+      const mgrRound=S.picks.filter(p=>p.mgrIdx===mIdx).length>r?r:null;
+      const filledPick=S.picks.find(p=>p.num===pNum);
+      const isCur=pNum===curPick()&&!draftDone();
+      if(filledPick){
+        const lg=logoUrl(filledPick.team);
+        h+=`<td><div class="pc filled" style="cursor:pointer" onclick="openEditPick(${pNum})" title="Click to edit/remove">
+          ${lg?`<img src="${lg}" width="18" height="18" style="object-fit:contain;margin-bottom:2px" onerror="this.style.display='none'">`:''}
+          <div class="pc-team">${filledPick.team}</div>
+          <div class="pc-num">#${pNum} ✎</div>
+        </div></td>`;
+      }else if(isCur){
+        h+=`<td><div class="pc active-pick"><div class="pc-clock">ON CLOCK</div><div class="pc-num">#${pNum}</div></div></td>`;
+      }else{
+        h+=`<td><div class="pc"><div class="pc-num">#${pNum}</div></div></td>`;
+      }
+    }
+    h+='</tr>';
+  }
+  h+='</tbody>';
+  document.getElementById('draft-grid').innerHTML=h;
+}
+
+function renderConfList(){
+  const q=(document.getElementById('team-search')||{value:''}).value.toLowerCase().trim();
+  let avail=0,h='';
+  FBS.forEach(conf=>{
+    const teams=q?conf.teams.filter(t=>t.toLowerCase().includes(q)):conf.teams;
+    if(!teams.length)return;
+    const taken=teams.filter(t=>teamOwner(t)>=0).length;
+    avail+=teams.length-taken;
+    const showPicks=!draftDone()&&S.draftDate!=='';
+    h+=`<div class="conf-block open" id="cb-${conf.conf.replace(/\W/g,'_')}">
+      <div class="conf-header" onclick="this.parentElement.classList.toggle('open')">
+        <span class="conf-name">${conf.conf}</span>
+        <span class="conf-count">${teams.length-taken}/${teams.length} avail</span>
+        <span class="chev">▲</span>
+      </div>
+      <div class="conf-teams-list">`;
+    teams.forEach(team=>{
+      const own=teamOwner(team);const tk=own>=0;
+      h+=`<div class="team-row ${tk?'taken':''}">
+        ${logoImg(team,22)}
+        <span class="team-nm" style="flex:1">${team}</span>
+        ${tk?`<span class="taken-by">– ${S.managers[own].split(' ')[0]}</span>`:showPicks?`<button class="pick-btn" onclick="quickPick('${team.replace(/'/g,"\\'")}')">Pick</button>`:'<span></span>'}
+      </div>`;
+    });
+    h+='</div></div>';
+  });
+  document.getElementById('conf-list').innerHTML=h;
+  document.getElementById('avail-badge').textContent=avail+' Available';
+}
+
+function renderOTC(){
+  const p=document.getElementById('otc-panel');
+  if(draftDone()){p.innerHTML=`<div class="otc-card"><div style="font-family:var(--ff);font-size:18px;font-weight:600;color:var(--gold);text-align:center">🏆 Draft Complete!</div><div style="text-align:center;font-size:12px;color:rgba(255,255,255,0.38);margin-top:4px">All 100 picks made. Good luck!</div></div>`;return;}
+  if(!S.draftDate){p.innerHTML=`<div class="otc-card"><div style="font-family:var(--ff);font-size:12px;color:rgba(255,255,255,0.35);letter-spacing:1px">Set a draft date in Admin to activate pick buttons</div></div>`;return;}
+  const pick=curPick(),mi=pickMgr(pick),rd=Math.ceil(pick/S.managers.length);
+  p.innerHTML=`<div class="otc-card">
+    <div class="otc-label">On The Clock</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:5px">
+      <div class="${avc(mi)}" style="width:40px;height:40px;font-size:14px">${ini(S.managers[mi])}</div>
+      <div><div class="otc-name">${S.managers[mi]}</div><div class="otc-meta">Round ${rd} · Pick ${pick} of ${TOTAL}</div></div>
+    </div>
+    <div class="otc-hint">Select a team from the conference list →</div>
+  </div>`;
+}
+
+function renderQueue(){ /* pick queue removed — grid shows all picks */ }
+
+function openEditPick(pickNum){
+  const pick=S.picks.find(p=>p.num===pickNum);
+  if(!pick)return;
+  const mi=pick.mgrIdx;
+  const panel=document.getElementById('edit-pick-panel');
+  const lg=logoUrl(pick.team);
+  panel.innerHTML=`
+    <div class="otc-card" style="border-color:rgba(233,69,96,0.4);background:rgba(233,69,96,0.06);margin-top:10px">
+      <div style="font-family:var(--ff);font-size:9px;font-weight:600;letter-spacing:2px;color:rgba(233,69,96,0.7);text-transform:uppercase;margin-bottom:8px">Edit Pick #${pickNum}</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        ${lg?`<img src="${lg}" width="36" height="36" style="object-fit:contain" onerror="this.style.display='none'">`:''}
+        <div>
+          <div style="font-family:var(--ff);font-size:18px;font-weight:700;color:#fff;line-height:1">${pick.team}</div>
+          <div style="font-family:var(--ff);font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">${S.managers[mi]} · Round ${Math.ceil(pickNum/S.managers.length)}</div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px">
+        <div style="font-family:var(--ff);font-size:9px;letter-spacing:1.5px;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:4px">Change to</div>
+        <div style="display:flex;gap:6px">
+          <select id="edit-pick-sel" class="fsel" style="font-size:12px;padding:5px 8px;flex:1"></select>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn btn-gold" style="font-size:10px;padding:6px 10px" onclick="confirmEditPick(${pickNum})">✓ Change Team</button>
+        <button class="btn btn-danger" style="font-size:10px;padding:6px 10px" onclick="confirmRemovePick(${pickNum})">✕ Remove Pick</button>
+        <button class="btn btn-ghost" style="font-size:10px;padding:6px 10px" onclick="closeEditPick()">Cancel</button>
+      </div>
+    </div>`;
+  // populate team select with available teams + current team
+  const sel=document.getElementById('edit-pick-sel');
+  const allAvail=FBS.flatMap(c=>c.teams).filter(t=>teamOwner(t)<0||t===pick.team).sort();
+  sel.innerHTML=allAvail.map(t=>`<option value="${t}"${t===pick.team?' selected':''}>${t}</option>`).join('');
+}
+
+function closeEditPick(){
+  const panel=document.getElementById('edit-pick-panel');
+  if(panel)panel.innerHTML='';
+}
+
+function confirmEditPick(pickNum){
+  const pick=S.picks.find(p=>p.num===pickNum);
+  if(!pick)return;
+  const sel=document.getElementById('edit-pick-sel');
+  if(!sel)return;
+  const newTeam=sel.value;
+  if(newTeam===pick.team){closeEditPick();return;}
+  if(teamOwner(newTeam)>=0&&newTeam!==pick.team){toast('Team already drafted');return;}
+  // remove old from roster
+  const r=S.rosters[pick.mgrIdx];
+  const idx=r.indexOf(pick.team);
+  if(idx>=0)r.splice(idx,1);
+  // update pick and roster
+  pick.team=newTeam;
+  r.push(newTeam);
+  saveStateWithFeedback();
+  closeEditPick();
+  renderDraft();renderRosters();
+  toast('Pick updated: '+newTeam);
+}
+
+function confirmRemovePick(pickNum){
+  const pick=S.picks.find(p=>p.num===pickNum);
+  if(!pick)return;
+  if(!confirm(`Remove ${pick.team} from pick #${pickNum}? All later picks will shift up by one.`))return;
+  // remove from roster
+  const r=S.rosters[pick.mgrIdx];
+  const ri=r.indexOf(pick.team);
+  if(ri>=0)r.splice(ri,1);
+  // remove pick and re-number subsequent picks
+  const idx=S.picks.findIndex(p=>p.num===pickNum);
+  S.picks.splice(idx,1);
+  // recalculate subsequent picks — manager assignments shift so just re-assign all pick nums
+  // simpler: renumber and recalc mgrIdx for each remaining pick in order
+  S.picks.forEach((p,i)=>{
+    const oldNum=p.num;
+    p.num=i+1;
+    p.mgrIdx=pickMgr(p.num);
+  });
+  // rebuild rosters from picks
+  S.rosters=S.managers.map(()=>[]);
+  S.picks.forEach(p=>{S.rosters[p.mgrIdx].push(p.team);});
+  saveStateWithFeedback();
+  closeEditPick();
+  renderDraft();renderRosters();
+  toast('Pick removed');
+}
+
+// ═══════════════════ PICK ACTIONS ═══════════════════════
+function quickPick(team){
+  if(draftDone()){toast('Draft complete');return;}
+  if(teamOwner(team)>=0){toast('Already drafted');return;}
+  const num=curPick(),mi=pickMgr(num);
+  S.picks.push({num,mgrIdx:mi,team});
+  if(!S.rosters[mi])S.rosters[mi]=[];
+  S.rosters[mi].push(team);
+  saveStateWithFeedback();
+  renderDraft();renderRosters();
+  toast(`${team} → ${S.managers[mi].split(' ')[0]}`);
+}
+function undoPick(){
+  if(!S.picks.length){toast('Nothing to undo');return;}
+  const last=S.picks.pop();
+  const r=S.rosters[last.mgrIdx];
+  const idx=r.lastIndexOf(last.team);
+  if(idx>=0)r.splice(idx,1);
+  saveStateWithFeedback();
+  renderDraft();renderRosters();
+  toast('Undone: '+last.team);
+}
+function doResetDraft(){
+  if(!confirm('Reset entire draft? All picks will be lost.'))return;
+  S.picks=[];S.rosters=S.managers.map(()=>[]);
+  saveStateWithFeedback();
+  renderDraft();renderRosters();toast('Draft reset');
+}
+
+// ═══════════════════ STANDINGS ══════════════════════════
+let standView='overall'; // 'overall' or week number
+
+function renderStandingsFilter(){
+  const weeks=Object.keys(S.weekResults).map(Number).sort((a,b)=>a-b);
+  const btns=document.getElementById('stand-filter-btns');
+  if(!btns)return;
+  let h=`<div class="wbtn${standView==='overall'?' active':''}" onclick="setStandView('overall',this)">Overall</div>`;
+  weeks.forEach(w=>{ h+=`<div class="wbtn${standView===w?' active':''}" onclick="setStandView(${w},this)">Wk ${w}</div>`; });
+  btns.innerHTML=h;
+}
+
+function setStandView(v,el){
+  standView=v;
+  document.querySelectorAll('#stand-filter-btns .wbtn').forEach(b=>b.classList.remove('active'));
+  if(el)el.classList.add('active');
+  renderStandings();
+}
+
+function getTeamWL(mgrIdx, weekNum){
+  // total W and L across all teams for a manager in a given week
+  const wkData=S.weekResults[weekNum];
+  if(!wkData)return{tw:0,tl:0};
+  const tw=wkData[mgrIdx]||0;
+  const tl=20-tw;
+  return{tw,tl};
+}
+
+function getTotalTeamWL(mgrIdx){
+  // cumulative team W-L across all weeks
+  let tw=0,tl=0;
+  Object.values(S.weekResults).forEach(wk=>{
+    tw+=wk[mgrIdx]||0;
+    tl+=20-(wk[mgrIdx]||0);
+  });
+  return{tw,tl};
+}
+
+function getWeeklyWins(mgrIdx){
+  return Object.values(S.weekResults).filter(wk=>{
+    const my=wk[mgrIdx]||0,mx=Math.max(...Object.values(wk));
+    return my===mx;
+  }).length;
+}
+
+function renderStandings(){
+  renderStandingsFilter();
+  const wks=Object.keys(S.weekResults).length;
+  const isWeek=standView!=='overall';
+  const hdr=document.getElementById('wl-col-header');
+  if(hdr)hdr.textContent=isWeek?`Wk ${standView} W–L`:'Team W–L';
+  document.getElementById('stand-badge').textContent=isWeek?`Week ${standView}`:'Overall';
+
+  const data=S.managers.map((m,i)=>{
+    const{w,l}=getRecord(i);
+    const ww=getWeeklyWins(i);
+    const pts=isWeek?(S.weekResults[standView]?S.weekResults[standView][i]||0:0):getPts(i);
+    const str=getStreak(i);
+    const pct=w+l>0?w/(w+l):0;
+    // team W-L: overall cumulative or single week
+    const{tw,tl}=isWeek?getTeamWL(i,standView):getTotalTeamWL(i);
+    return{i,m,w,l,ww,pts,str,pct,tw,tl};
+  }).sort((a,b)=>isWeek?b.pts-a.pts:(b.w-a.w||b.pts-a.pts));
+
+  const rkC=['r1','r2','r3','',''];
+  document.getElementById('stand-body').innerHTML=data.map((d,rank)=>{
+    const pp=Math.round(d.pct*100),ps=d.w+d.l>0?d.pct.toFixed(3).replace(/^0/,''):'.000';
+    const sh=d.str.n>0?`<span class="sk ${d.str.t==='W'?'sw':'sl2'}">${d.str.t}${d.str.n}</span>`:`<span style="color:rgba(255,255,255,0.2);font-size:10px">—</span>`;
+    const wwCell=d.ww>0?`<span style="font-family:var(--ff);font-size:16px;font-weight:600;color:var(--green)">${d.ww}</span>`:`<span style="color:rgba(255,255,255,0.2);font-size:13px">0</span>`;
+    return `<tr class="${rkC[rank]||''}">
+      <td><div class="rk"><div class="rn">${rank+1}</div><div class="${avc(d.i)}">${ini(d.m)}</div><div class="mn">${d.m}</div></div></td>
+      <td><span class="wld"><span class="wc">${d.tw}</span><span class="sep2">–</span><span class="lc">${d.tl}</span></span></td>
+      <td>${wwCell}</td>
+      <td><div class="pbw"><div class="pb"><div class="pf" style="width:${pp}%"></div></div><div class="pt">${ps}</div></div></td>
+      <td>${sh}</td>
+      <td class="ptsc">${d.pts}</td>
+    </tr>`;
+  }).join('');
+  updateBanner();
+}
+
+function updateBanner(){
+  document.getElementById('banner-sub-top').textContent=`${S.leagueName} · ${S.seasonYear} Season`;
+  const wks=Object.keys(S.weekResults).length;
+  if(!draftDone()){
+    document.getElementById('banner-champ').textContent=S.picks.length>0?'Draft In Progress':'Draft Upcoming';
+    document.getElementById('banner-sub').textContent=`${S.picks.length} of ${TOTAL} picks made`;
+  }else if(!wks){
+    document.getElementById('banner-champ').textContent='Season Upcoming';
+    document.getElementById('banner-sub').textContent='Draft Complete · Ready for Kickoff';
+  }else{
+    const sorted=S.managers.map((_,i)=>({i,r:getRecord(i)})).sort((a,b)=>b.r.w-a.r.w||getPts(b.i)-getPts(a.i));
+    const ldr=sorted[0];const{w,l}=getRecord(ldr.i);
+    document.getElementById('banner-champ').textContent=S.managers[ldr.i].toUpperCase();
+    document.getElementById('banner-sub').textContent=`${w}–${l} · Current Leader`;
+  }
+  const parts=S.leagueName.trim().split(' ');
+  document.getElementById('nav-logo').innerHTML=`${(parts[0]||'GRID').toUpperCase()}<span>${parts.slice(1).join(' ').toUpperCase()||'GLORY'}</span>`;
+}
+
+// ═══════════════════ SCOREBOARD ═════════════════════════
+function toggleRosterExpand(mgrIdx){
+  const el=document.getElementById('roster-expand-'+mgrIdx);
+  if(!el)return;
+  const isOpen=el.classList.contains('open');
+  // close all first
+  document.querySelectorAll('.roster-expand').forEach(e=>e.classList.remove('open'));
+  document.querySelectorAll('.expand-btn').forEach(b=>{b.textContent='&#9660; Roster';b.classList.remove('active');});
+  if(!isOpen){
+    el.classList.add('open');
+    const btn=document.getElementById('expand-btn-'+mgrIdx);
+    if(btn){btn.textContent='&#9650; Hide';btn.classList.add('active');}
+  }
+}
+
+function renderScoreboard(sel){
+  const weeks=Object.keys(S.weekResults).map(Number).sort((a,b)=>a-b);
+  document.getElementById('week-btns').innerHTML=weeks.map(w=>`<div class="wbtn${w===sel?' active':''}" onclick="renderScoreboard(${w})">Wk ${w}</div>`).join('');
+  const cont=document.getElementById('score-cont');
+  if(!weeks.length){cont.innerHTML='<div class="no-data">No weeks scored yet</div>';return;}
+  if(!weeks.includes(sel))sel=weeks[weeks.length-1];
+  const wk=S.weekResults[sel];
+  const weekTeamResults=(S.teamResults&&S.teamResults[sel])||{};
+  const ranked=S.managers.map((m,i)=>({i,m,wins:wk[i]||0})).sort((a,b)=>b.wins-a.wins);
+  const rows=ranked.map((d,rank)=>{
+    const isW=rank===0;
+    const teams=S.rosters[d.i]||[];
+    const mgrTeamRes=weekTeamResults[d.i]||{};
+    const rosterRows=teams.map(t=>{
+      const res=mgrTeamRes[t];
+      const lg=logoUrl(t);
+      const resHtml=res==='W'?'<span class="tr-result tr-w">W</span>':res==='L'?'<span class="tr-result tr-l">L</span>':'<span class="tr-result tr-none">\u2014</span>';
+      return `<div class="team-result-row">${lg?`<img src="${lg}" width="16" height="16" style="object-fit:contain;flex-shrink:0" onerror="this.style.display='none'">`:''}
+        <span style="flex:1;color:${res==='W'?'#7bc67e':res==='L'?'rgba(233,69,96,0.8)':'rgba(255,255,255,0.55)'}">${t}</span>${resHtml}</div>`;
+    }).join('');
+    return `${rank>0?'<div class="vdiv">&middot; &middot; &middot;</div>':''}
+    <div class="wrow ${isW?'win-row':'lose-row'}">
+      <div class="wmgr"><div class="${avc(d.i)}" style="width:28px;height:28px;font-size:10px">${ini(d.m)}</div>
+      <div class="wname">${d.m}</div></div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span id="expand-btn-${d.i}" class="expand-btn" onclick="toggleRosterExpand(${d.i})">&#9660; Roster</span>
+        <div class="sblk"><div class="swn${isW?' best':''}">${d.wins}\u2013${20-d.wins}</div><div class="swrc">${d.wins} wins &middot; ${rank+1}${['st','nd','rd','th','th'][rank]}</div></div>
+      </div>
+    </div>
+    <div class="roster-expand" id="roster-expand-${d.i}">
+      <div class="roster-expand-inner">${rosterRows}</div>
+    </div>`;
+  }).join('');
+  cont.innerHTML=`<div class="wwbar"><div style="font-size:16px">&#127877;</div><div><div class="wwl">Week ${sel} Winner</div><div class="wwn">${ranked[0].m}</div></div><div class="wws">${ranked[0].wins} wins</div></div><div class="week-card"><div class="wch"><div class="wchl">Week ${sel} &middot; Full Results</div><div class="wchr">Final</div></div>${rows}</div>`;
+}
+
+// ═══════════════════ ROSTERS ════════════════════════════
+function renderRosters(){
+  document.getElementById('roster-grid').innerHTML=S.managers.map((m,i)=>{
+    const{w,l}=getRecord(i),teams=S.rosters[i]||[];
+    const isLast=i===S.managers.length-1;
+    const rows=Array.from({length:20},(_,t)=>{
+      if(!teams[t]) return `<div class="ti"><span class="tnum">${t+1}</span><span style="color:rgba(255,255,255,0.2);font-style:italic">—</span></div>`;
+      const{w:tw,l:tl}=getTeamRecord(i,teams[t]);
+      const hasRecord=tw>0||tl>0;
+      const recHtml=hasRecord
+        ?`<span style="font-family:var(--ff);font-size:11px;margin-left:auto;color:${tw>tl?'#7bc67e':tw<tl?'rgba(233,69,96,0.8)':'rgba(255,255,255,0.35)'}">${tw}–${tl}</span>`
+        :`<span style="font-family:var(--ff);font-size:10px;margin-left:auto;color:rgba(255,255,255,0.15)">—</span>`;
+      return `<div class="ti"><span class="tnum">${t+1}</span>${logoImg(teams[t],18)}<span style="margin-left:5px;flex:1">${teams[t]}</span>${recHtml}</div>`;
+    }).join('');
+    return `<div class="rc"${isLast?' style="grid-column:span 2"':''}><div class="rch"><div class="${avc(i)}" style="width:28px;height:28px;font-size:10px">${ini(m)}</div><div class="rchn">${m}</div><div class="rchr">${w}–${l}</div></div><div class="tlist">${rows}</div></div>`;
+  }).join('');
+}
+
+// ═══════════════════ ADMIN ══════════════════════════════
+function initAdmin(){
+  document.getElementById('a-lname').value=S.leagueName;
+  document.getElementById('a-year').value=S.seasonYear;
+  document.getElementById('a-weeks').value=S.totalWeeks;
+  document.getElementById('a-date').value=S.draftDate;
+  document.getElementById('a-time').value=S.draftTime;
+  document.getElementById('a-mode').value=S.mode;
+  // mgr names
+  document.getElementById('a-mgr-names').innerHTML=S.managers.map((m,i)=>`<div class="fr"><div class="fg" style="max-width:50px"><div class="flabel">Slot ${i+1}</div><div class="${avc(i)}" style="width:26px;height:26px;font-size:9px;margin-top:2px">${ini(m)}</div></div><div class="fg"><div class="flabel">Name</div><input class="finput" id="am-${i}" value="${m}"></div></div>`).join('');
+  // draft status
+  const pick=curPick(),mi=pickMgr(pick);
+  document.getElementById('a-draft-status').innerHTML=draftDone()
+    ?`<span style="font-family:var(--ff);font-size:13px;color:var(--gold)">Draft Complete — 100/100 picks made</span>`
+    :`<span style="font-family:var(--ff);font-size:13px;color:#fff">Pick #${pick} · <span style="color:var(--green)">${S.managers[mi]}</span> is on the clock (Round ${Math.ceil(pick/S.managers.length)})</span>`;
+  // conf select
+  const cs=document.getElementById('a-conf');
+  cs.innerHTML=FBS.map(c=>`<option value="${c.conf}">${c.conf}</option>`).join('');
+  refreshPickTeams();
+  // scores
+  buildScoreRows();
+  initMoneyInputs();
+  initPostseasonInputs();
+  initDropInputs();
+  // storage status shown by setSyncStatus — nothing to compute here
+}
+
+function refreshPickTeams(){
+  const conf=document.getElementById('a-conf').value;
+  const cd=FBS.find(c=>c.conf===conf);
+  const ts=document.getElementById('a-team');
+  if(!cd){ts.innerHTML='';return;}
+  const avail=cd.teams.filter(t=>teamOwner(t)<0);
+  ts.innerHTML=avail.length?avail.map(t=>`<option value="${t}">${t}</option>`).join(''):'<option disabled>All taken</option>';
+}
+
+function adminPick(){
+  if(draftDone()){toast('Draft complete');return;}
+  const t=document.getElementById('a-team').value;
+  if(!t||teamOwner(t)>=0){toast('Invalid team');return;}
+  quickPick(t);refreshPickTeams();
+  const pick=curPick(),mi=pickMgr(pick);
+  document.getElementById('a-draft-status').innerHTML=draftDone()
+    ?`<span style="font-family:var(--ff);font-size:13px;color:var(--gold)">Draft Complete!</span>`
+    :`<span style="font-family:var(--ff);font-size:13px;color:#fff">Pick #${pick} · <span style="color:var(--green)">${S.managers[mi]}</span> is on the clock</span>`;
+}
+
+function saveLeagueSettings(){
+  S.leagueName=document.getElementById('a-lname').value||S.leagueName;
+  S.seasonYear=document.getElementById('a-year').value||S.seasonYear;
+  S.totalWeeks=parseInt(document.getElementById('a-weeks').value)||14;
+  S.draftDate=document.getElementById('a-date').value;
+  S.draftTime=document.getElementById('a-time').value;
+  S.mode=document.getElementById('a-mode').value;
+  saveStateWithFeedback();
+  renderDraft();renderStandings();
+  toast('Settings saved');
+}
+
+function saveMgrNames(){
+  S.managers=S.managers.map((_,i)=>{const v=document.getElementById('am-'+i);return v?v.value.trim()||S.managers[i]:S.managers[i];});
+  saveStateWithFeedback();
+  renderDraft();renderStandings();renderRosters();
+  toast('Manager names saved');
+}
+
+// score entry
+function buildScoreRows(){
+  scoreState={};
+  // Pre-populate with any existing results for this week
+  const wk=parseInt((document.getElementById('a-week-num')||{value:'0'}).value)||0;
+  const submittedTR=wk&&S.teamResults&&S.teamResults[wk]?S.teamResults[wk]:null;
+  const draftTR=wk&&S.draftScores&&S.draftScores[wk]?S.draftScores[wk]:null;
+  const existing=submittedTR||draftTR||{};
+
+  const cont=document.getElementById('a-score-rows');
+  if(!S.rosters.some(r=>r&&r.length)){
+    cont.innerHTML='<div style="font-family:var(--ff);font-size:12px;color:rgba(255,255,255,0.3);padding:16px;text-align:center;letter-spacing:1px">NO TEAMS DRAFTED YET</div>';
+    return;
+  }
+  // wk=0 is fine — just show blank W/L grid so admin can see the layout and enter week # to load saved data
+
+  // Build a flat list of all teams across all managers grouped by manager
+  // Layout: 5 columns (one per manager), each team row is a compact W/L pill
+  const maxTeams=Math.max(...S.managers.map((_,i)=>(S.rosters[i]||[]).length));
+
+  // Manager header row
+  let headerHtml=`<div style="display:grid;grid-template-columns:repeat(${S.managers.length},1fr);gap:6px;margin-bottom:8px">`;
+  S.managers.forEach((m,i)=>{
+    scoreState[i]={};
+    // restore any existing results
+    const ex=existing[i]||{};
+    const teams=S.rosters[i]||[];
+    teams.forEach((t,ti)=>{ if(ex[t])scoreState[i][ti]=ex[t]; });
+    // also restore index-keyed draft state
+    const idxDraft=wk&&S.draftScores&&S.draftScores[wk]&&S.draftScores[wk][i]?S.draftScores[wk][i]:{};
+    Object.entries(idxDraft).forEach(([ti2,v])=>{ if(!scoreState[i][parseInt(ti2)])scoreState[i][parseInt(ti2)]=v; });
+    headerHtml+=`<div style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;background:rgba(255,255,255,0.03);border-radius:4px;border-bottom:2px solid var(--${['accent','blue','green','gold','purple'][i]||'gold'})">
+      <div class="${avc(i)}" style="width:26px;height:26px;font-size:10px">${ini(m)}</div>
+      <span style="font-family:var(--ff);font-size:11px;font-weight:600;color:#fff">${m.split(' ')[0]}</span>
+      <span style="font-family:var(--ff);font-size:11px;color:var(--gold)" id="mw-${i}">0 W</span>
+      ${submittedTR&&submittedTR[i]?'<span style="font-family:var(--ff);font-size:9px;color:rgba(123,198,126,0.7);letter-spacing:1px">✓ SAVED</span>':draftTR&&draftTR[i]?'<span style="font-family:var(--ff);font-size:9px;color:rgba(245,197,24,0.6);letter-spacing:1px">⟳ DRAFT</span>':''}
+    </div>`;
+  });
+  headerHtml+='</div>';
+
+  // Team rows — each row shows one team per manager side by side
+  let rowsHtml=`<div style="display:grid;grid-template-columns:repeat(${S.managers.length},1fr);gap:4px 6px">`;
+  for(let t=0;t<maxTeams;t++){
+    S.managers.forEach((m,i)=>{
+      const teams=S.rosters[i]||[];
+      const team=teams[t];
+      if(!team){ rowsHtml+=`<div></div>`; return; }
+      const cur=scoreState[i][t]||null;
+      const lg=logoUrl(team);
+      rowsHtml+=`<div id="team-cell-${i}-${t}" style="display:flex;align-items:center;gap:4px;padding:4px 5px;border-radius:3px;border:1px solid rgba(255,255,255,0.06);background:${cur==='W'?'rgba(123,198,126,0.12)':cur==='L'?'rgba(233,69,96,0.1)':'rgba(255,255,255,0.02)'}">
+        ${lg?`<img src="${lg}" width="16" height="16" style="object-fit:contain;flex-shrink:0" onerror="this.style.display='none'">`:''}
+        <span style="font-size:11px;color:${cur==='W'?'#7bc67e':cur==='L'?'#e94560':'rgba(255,255,255,0.55)'};flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis" title="${team}">${team}</span>
+        <div style="display:flex;gap:2px;flex-shrink:0">
+          <div onclick="setRes(${i},${t},'W')" style="font-family:var(--ff);font-size:9px;font-weight:700;padding:2px 5px;border-radius:2px;cursor:pointer;background:${cur==='W'?'#2d6a4f':'rgba(123,198,126,0.1)'};color:${cur==='W'?'#7bc67e':'rgba(123,198,126,0.4)'};border:1px solid ${cur==='W'?'rgba(123,198,126,0.5)':'rgba(123,198,126,0.15)'}">W</div>
+          <div onclick="setRes(${i},${t},'L')" style="font-family:var(--ff);font-size:9px;font-weight:700;padding:2px 5px;border-radius:2px;cursor:pointer;background:${cur==='L'?'rgba(233,69,96,0.25)':'rgba(233,69,96,0.07)'};color:${cur==='L'?'#e94560':'rgba(233,69,96,0.35)'};border:1px solid ${cur==='L'?'rgba(233,69,96,0.4)':'rgba(233,69,96,0.12)'}">L</div>
+        </div>
+      </div>`;
+    });
+  }
+  rowsHtml+='</div>';
+
+  cont.innerHTML=headerHtml+rowsHtml;
+
+  // Restore win counts for any pre-loaded data
+  S.managers.forEach((_,i)=>{
+    const wins=Object.values(scoreState[i]).filter(v=>v==='W').length;
+    const el=document.getElementById('mw-'+i);
+    if(el)el.textContent=wins+' W';
+  });
+}
+
+function setRes(mi,ti,res){
+  const prev=scoreState[mi][ti];
+  scoreState[mi][ti]=prev===res?null:res;
+  const cur=scoreState[mi][ti];
+  // update cell background and button styles in-place
+  const cell=document.getElementById(`team-cell-${mi}-${ti}`);
+  if(cell){
+    cell.style.background=cur==='W'?'rgba(123,198,126,0.12)':cur==='L'?'rgba(233,69,96,0.1)':'rgba(255,255,255,0.02)';
+    const nameEl=cell.querySelector('span');
+    if(nameEl)nameEl.style.color=cur==='W'?'#7bc67e':cur==='L'?'#e94560':'rgba(255,255,255,0.55)';
+    const btns=cell.querySelectorAll('div[onclick]');
+    if(btns[0]){// W button
+      btns[0].style.background=cur==='W'?'#2d6a4f':'rgba(123,198,126,0.1)';
+      btns[0].style.color=cur==='W'?'#7bc67e':'rgba(123,198,126,0.4)';
+      btns[0].style.borderColor=cur==='W'?'rgba(123,198,126,0.5)':'rgba(123,198,126,0.15)';
+    }
+    if(btns[1]){// L button
+      btns[1].style.background=cur==='L'?'rgba(233,69,96,0.25)':'rgba(233,69,96,0.07)';
+      btns[1].style.color=cur==='L'?'#e94560':'rgba(233,69,96,0.35)';
+      btns[1].style.borderColor=cur==='L'?'rgba(233,69,96,0.4)':'rgba(233,69,96,0.12)';
+    }
+  }
+  const wins=Object.values(scoreState[mi]).filter(v=>v==='W').length;
+  const el=document.getElementById('mw-'+mi);if(el)el.textContent=wins+' W';
+  const wkNum=parseInt((document.getElementById('a-week-num')||{value:0}).value)||0;
+  if(wkNum){
+    if(!S.draftScores)S.draftScores={};
+    if(!S.draftScores[wkNum])S.draftScores[wkNum]={};
+    S.draftScores[wkNum][mi]=Object.assign({},scoreState[mi]);
+    saveStateWithFeedback();
+  }
+  updatePreview();
+}
+
+function updatePreview(){
+  const prev=document.getElementById('a-preview'),rows=document.getElementById('a-preview-rows');
+  const tots=S.managers.map((_,i)=>({i,m:S.managers[i],w:Object.values(scoreState[i]||{}).filter(v=>v==='W').length})).sort((a,b)=>b.w-a.w);
+  if(!tots.some(t=>t.w>0)){prev.style.display='none';return;}
+  const mx=tots[0].w;prev.style.display='block';
+  rows.innerHTML=tots.map(t=>`<div class="rprow"><span class="rpn">${t.m}</span><span class="rps" style="${t.w===mx?'color:var(--gold)':''}">${t.w}W</span></div>`).join('');
+}
+
+function submitScores(){
+  const wk=parseInt(document.getElementById('a-week-num').value);
+  if(!wk||wk<1||wk>20){toast('Enter valid week');return;}
+  const d={};
+  const teamResults={}; // {mgrIdx: {teamName: 'W'|'L'|null}}
+  S.managers.forEach((_,i)=>{
+    d[i]=Object.values(scoreState[i]||{}).filter(v=>v==='W').length;
+    teamResults[i]={};
+    const teams=S.rosters[i]||[];
+    teams.forEach((t,ti)=>{if(scoreState[i]&&scoreState[i][ti])teamResults[i][t]=scoreState[i][ti];});
+  });
+  S.weekResults[wk]=d;
+  if(!S.teamResults)S.teamResults={};
+  S.teamResults[wk]=teamResults;
+  S.currentWeek=Math.max(S.currentWeek,wk);
+  if(S.draftScores&&S.draftScores[wk])delete S.draftScores[wk];
+  saveStateWithFeedback();
+  renderStandings();renderScoreboard(wk);renderRosters();clearScores();
+  toast('Week '+wk+' saved!');
+}
+function clearScores(){
+  const wkNum=parseInt((document.getElementById('a-week-num')||{value:0}).value)||0;
+  if(wkNum&&S.draftScores&&S.draftScores[wkNum])delete S.draftScores[wkNum];
+  buildScoreRows();document.getElementById('a-preview').style.display='none';
+}
+
+// ═══════════════════ TABS ═══════════════════════════════
+function exportData(){
+  const filename=`cfc-backup-${S.leagueName.replace(/\s+/g,'-').toLowerCase()}-${S.seasonYear}-${new Date().toISOString().slice(0,10)}.json`;
+  const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=filename;
+  document.body.appendChild(a);a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Exported: '+filename);
+}
+
+function importData(event){
+  const file=event.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const parsed=JSON.parse(e.target.result);
+      // basic validation — must have managers array
+      if(!parsed.managers||!Array.isArray(parsed.managers)){
+        alert('Invalid backup file — missing managers data.');
+        return;
+      }
+      if(!confirm(`Import data for "${parsed.leagueName||'Unknown'}" (${parsed.seasonYear||'?'})? This will overwrite your current data.`))return;
+      S=Object.assign({},DEFAULT_S,parsed);
+      // ensure arrays are correct length
+      if(!S.postseason||S.postseason.length!==S.managers.length)
+        S.postseason=S.managers.map(()=>[0,0,0,0,0]);
+      if(!S.drops||S.drops.length!==S.managers.length)
+        S.drops=S.managers.map(()=>null);
+      if(!S.payouts)S.payouts=Object.assign({},DEFAULT_S.payouts);
+      saveStateWithFeedback();
+      renderDraft();renderStandings();renderRosters();
+      initAdmin();
+      toast('Import successful!');
+    }catch(err){
+      alert('Failed to read file. Make sure it is a valid CFC backup JSON.');
+      console.error(err);
+    }
+    // reset file input so same file can be re-imported
+    event.target.value='';
+  };
+  reader.readAsText(file);
+}
+
+async function clearAllData(){
+  if(!confirm('Clear ALL league data? This will reset the entire app including draft, scores, and settings.'))return;
+  S=Object.assign({},DEFAULT_S);
+  scoreState={};
+  await saveState();
+  renderDraft();renderStandings();renderRosters();
+  toast('All data cleared');
+}
+
+// ═══════════════════ POSTSEASON & PAYOUTS ═══════════════
+function calcEarnings(i){
+  const P=S.payouts,ps=S.postseason[i]||[0,0,0,0,0];
+  // weekly wins paid
+  const weekWins=Object.values(S.weekResults).filter(wk=>{
+    const my=wk[i]||0,mx=Math.max(...Object.values(wk));return my===mx;
+  }).length;
+  const wkEarnings=weekWins*P.weeklyWin;
+  // regular season rank
+  const sorted=S.managers.map((_,j)=>({j,w:getRecord(j).w,pts:getPts(j)})).sort((a,b)=>b.w-a.w||b.pts-a.pts);
+  const rank=sorted.findIndex(x=>x.j===i);
+  const rsEarnings=rank===0?P.mostWins:rank===1?P.secondWins:0;
+  // postseason
+  const [cc,pt,qf,sf,nc]=ps;
+  const postEarnings=cc*P.confChamp + pt*P.playoffTeam + qf*P.qfWin + sf*P.sfWin + nc*P.natChamp;
+  return {wkEarnings,rsEarnings,postEarnings,total:wkEarnings+rsEarnings+postEarnings,weekWins,rank,cc,pt,qf,sf,nc};
+}
+
+function renderPostseason(){
+  const pot=S.managers.length*S.entryFee;
+  document.getElementById('pot-badge').textContent='$'+pot.toLocaleString()+' Pot';
+  // payout summary cards
+  const cats=[
+    {key:'weeklyWin',label:'Weekly Win'},
+    {key:'mostWins',label:'Most Reg Wins'},
+    {key:'secondWins',label:'2nd Most Wins'},
+    {key:'confChamp',label:'Conf Champ'},
+    {key:'playoffTeam',label:'Playoff Team'},
+    {key:'qfWin',label:'QF Win'},
+    {key:'sfWin',label:'SF Win'},
+    {key:'natChamp',label:'Natl Champ'}
+  ];
+  // figure winner per category
+  function catWinner(key){
+    if(key==='weeklyWin'){
+      const counts=S.managers.map((_,i)=>({i,n:Object.values(S.weekResults).filter(wk=>{const my=wk[i]||0,mx=Math.max(...Object.values(wk));return my===mx;}).length}));
+      counts.sort((a,b)=>b.n-a.n);return counts[0]&&counts[0].n>0?S.managers[counts[0].i].split(' ')[0]+' ('+counts[0].n+'w)':'—';
+    }
+    if(key==='mostWins'||key==='secondWins'){
+      const sorted=S.managers.map((_,i)=>({i,w:getRecord(i).w})).sort((a,b)=>b.w-a.w);
+      const idx=key==='mostWins'?0:1;return sorted[idx]&&sorted[idx].w>0?S.managers[sorted[idx].i].split(' ')[0]+' ('+sorted[idx].w+'w)':'—';
+    }
+    const psKeys={confChamp:0,playoffTeam:1,qfWin:2,sfWin:3,natChamp:4};
+    const pIdx=psKeys[key];
+    const best=S.managers.map((_,i)=>({i,n:(S.postseason[i]||[])[pIdx]||0})).sort((a,b)=>b.n-a.n);
+    return best[0]&&best[0].n>0?S.managers[best[0].i].split(' ')[0]+' ('+best[0].n+')':'—';
+  }
+  document.getElementById('payout-cards').innerHTML=cats.map(c=>`
+    <div class="payout-card">
+      <div class="payout-label">${c.label}</div>
+      <div class="payout-amount">$${S.payouts[c.key]}</div>
+      <div class="payout-winner">${catWinner(c.key)}</div>
+    </div>`).join('');
+
+  // postseason table
+  const data=S.managers.map((m,i)=>{const e=calcEarnings(i);return{i,m,e};}).sort((a,b)=>b.e.total-a.e.total);
+  document.getElementById('postseason-body').innerHTML=data.map((d,rank)=>{
+    const ac=avc(d.i);
+    return `<tr>
+      <td><div class="rk"><div class="rn">${rank+1}</div><div class="${ac}">${ini(d.m)}</div><div class="mn">${d.m}</div></div></td>
+      <td class="post-num">${d.e.cc}</td>
+      <td class="post-num">${d.e.pt}</td>
+      <td class="post-num">${d.e.qf}</td>
+      <td class="post-num">${d.e.sf}</td>
+      <td class="post-num">${d.e.nc}</td>
+      <td class="post-num" style="color:rgba(255,255,255,0.5);font-size:11px">$${d.e.wkEarnings}+$${d.e.rsEarnings}+$${d.e.postEarnings}</td>
+      <td class="earnings-total">$${d.e.total}</td>
+    </tr>`;
+  }).join('');
+
+  // drop table
+  document.getElementById('drop-badge').textContent='After Week '+S.dropWeek;
+  document.getElementById('drop-body').innerHTML=S.managers.map((m,i)=>{
+    const d=S.drops[i];
+    const ac=avc(i);
+    return `<tr>
+      <td><div class="rk"><div class="${ac}" style="width:26px;height:26px;font-size:9px">${ini(m)}</div><div class="mn" style="font-size:13px">${m}</div></div></td>
+      <td>${d&&d.dropped?`<span class="drop-old">${d.dropped}</span>`:'<span style="color:rgba(255,255,255,0.2)">—</span>'}</td>
+      <td class="drop-rec">${d&&d.droppedRecord||'—'}</td>
+      <td>${d&&d.added?`<span class="drop-new">${d.added}</span>`:'<span style="color:rgba(255,255,255,0.2)">—</span>'}</td>
+      <td class="drop-rec">${d&&d.addedRecord||'—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════ ADMIN: MONEY, POSTSEASON, DROP ════
+function initMoneyInputs(){
+  const cats=[
+    {key:'weeklyWin',label:'Per Weekly Win ($)'},
+    {key:'mostWins',label:'Most Reg Season Wins ($)'},
+    {key:'secondWins',label:'2nd Most Wins ($)'},
+    {key:'confChamp',label:'Per Conf Champ ($)'},
+    {key:'playoffTeam',label:'Per Playoff Team ($)'},
+    {key:'qfWin',label:'Per QF Win ($)'},
+    {key:'sfWin',label:'Per SF Win ($)'},
+    {key:'natChamp',label:'National Champion ($)'}
+  ];
+  document.getElementById('a-entry-fee').value=S.entryFee||304;
+  document.getElementById('payout-inputs').innerHTML=cats.map(c=>`
+    <div class="fr">
+      <div class="fg"><div class="flabel">${c.label}</div>
+        <input class="finput" id="pay-${c.key}" type="number" min="0" value="${S.payouts[c.key]||0}">
+      </div>
+    </div>`).join('');
+}
+
+function saveMoneySettings(){
+  S.entryFee=parseInt(document.getElementById('a-entry-fee').value)||0;
+  const keys=['weeklyWin','mostWins','secondWins','confChamp','playoffTeam','qfWin','sfWin','natChamp'];
+  keys.forEach(k=>{const el=document.getElementById('pay-'+k);if(el)S.payouts[k]=parseInt(el.value)||0;});
+  saveStateWithFeedback();
+  toast('Money settings saved');
+}
+
+function initPostseasonInputs(){
+  const cats=['Conf Champs','Playoff Teams','QF Wins','SF Wins','Natl Champ'];
+  document.getElementById('postseason-inputs').innerHTML=S.managers.map((m,i)=>`
+    <div style="margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.05)">
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:7px">
+        <div class="${avc(i)}" style="width:24px;height:24px;font-size:9px">${ini(m)}</div>
+        <span style="font-family:var(--ff);font-size:13px;font-weight:600;color:#fff">${m}</span>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        ${cats.map((cat,ci)=>`<div class="fg" style="min-width:80px;max-width:100px">
+          <div class="flabel">${cat}</div>
+          <input class="finput" id="ps-${i}-${ci}" type="number" min="0" max="20" value="${(S.postseason[i]||[])[ci]||0}">
+        </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function savePostseason(){
+  S.managers.forEach((_,i)=>{
+    S.postseason[i]=Array.from({length:5},(_,ci)=>{
+      const el=document.getElementById(`ps-${i}-${ci}`);
+      return el?parseInt(el.value)||0:0;
+    });
+  });
+  saveStateWithFeedback();
+  toast('Postseason saved');
+}
+
+function initDropInputs(){
+  document.getElementById('a-drop-week').value=S.dropWeek||4;
+  document.getElementById('drop-inputs').innerHTML=S.managers.map((m,i)=>{
+    const d=S.drops[i]||{};
+    return `<div style="margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.05)">
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:7px">
+        <div class="${avc(i)}" style="width:24px;height:24px;font-size:9px">${ini(m)}</div>
+        <span style="font-family:var(--ff);font-size:13px;font-weight:600;color:#fff">${m}</span>
+      </div>
+      <div class="fr">
+        <div class="fg"><div class="flabel">Dropped Team</div><input class="finput" id="drop-out-${i}" placeholder="e.g. Oregon St" value="${d.dropped||''}"></div>
+        <div class="fg" style="max-width:100px"><div class="flabel">Record at Drop</div><input class="finput" id="drop-outr-${i}" placeholder="0-4" value="${d.droppedRecord||''}"></div>
+        <div class="fg"><div class="flabel">Added Team</div><input class="finput" id="drop-in-${i}" placeholder="e.g. Maryland" value="${d.added||''}"></div>
+        <div class="fg" style="max-width:100px"><div class="flabel">Record After</div><input class="finput" id="drop-inr-${i}" placeholder="4-0" value="${d.addedRecord||''}"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function saveDrop(){
+  S.dropWeek=parseInt(document.getElementById('a-drop-week').value)||4;
+  S.managers.forEach((_,i)=>{
+    const out=document.getElementById('drop-out-'+i);
+    const outr=document.getElementById('drop-outr-'+i);
+    const inn=document.getElementById('drop-in-'+i);
+    const innr=document.getElementById('drop-inr-'+i);
+    if(out&&inn){
+      S.drops[i]={dropped:out.value.trim(),droppedRecord:outr?outr.value.trim():'',added:inn.value.trim(),addedRecord:innr?innr.value.trim():''};
+    }
+  });
+  saveStateWithFeedback();
+  toast('The Drop saved');
+}
+
+
+// ═══════════════════ DEMO MODE ══════════════════════════
+const DEMO_TEAMS = [
+  // These are the actual FBS teams distributed realistically across 5 managers
+  // Manager 0
+  ['Alabama','Ohio State','Georgia','Michigan','Penn State','LSU','Clemson','Texas','Notre Dame','Oregon',
+   'Tennessee','Oklahoma','Miami','Florida State','North Carolina','Utah','Iowa State','Kansas State','Tulane','Boise State'],
+  // Manager 1
+  ['Texas A&M','Ole Miss','Missouri','USC','Washington','Wisconsin','NC State','TCU','Pittsburgh','Virginia Tech',
+   'Louisville','Baylor','Utah State','Air Force','Army','Fresno State','Appalachian State','James Madison','Liberty','Troy'],
+  // Manager 2
+  ['Florida','Auburn','Arkansas','Michigan State','Minnesota','Nebraska','Indiana','Kansas','Arizona State','Colorado',
+   'West Virginia','Cincinnati','UCF','Memphis','Tulsa','San Jose State','Colorado State','Louisiana','Marshall','Old Dominion'],
+  // Manager 3
+  ['Kentucky','South Carolina','Vanderbilt','Maryland','Illinois','Purdue','Rutgers','Northwestern','Iowa','Duke',
+   'Syracuse','Wake Forest','Virginia','Boston College','Georgia Tech','SMU','Navy','UAB','South Florida','East Carolina'],
+  // Manager 4
+  ['Mississippi State','Texas Tech','Oklahoma State','Arizona','BYU','Houston','UCF','Stanford','California','UCLA',
+   'Oregon State','Washington State','Wyoming','Nevada','UNLV','New Mexico','Hawaii','North Texas','Rice','UTSA']
+];
+
+const DEMO_WEEK_WINS = [14, 11, 16, 9, 12]; // wins per manager for simulated week 1
+
+function demoDraftOnly(){
+  if(S.picks.length>0&&!confirm('This will overwrite existing draft picks. Continue?'))return;
+  // reset picks and rosters
+  S.picks=[];
+  S.rosters=S.managers.map(()=>[]);
+  // fill all 100 picks in snake order
+  for(let num=1;num<=TOTAL;num++){
+    const mi=pickMgr(num);
+    const mgrTeams=DEMO_TEAMS[mi];
+    // figure which pick number this is for this manager (0-indexed)
+    const mgrPicksSoFar=S.picks.filter(p=>p.mgrIdx===mi).length;
+    const team=mgrTeams[mgrPicksSoFar]||('Team '+(mgrPicksSoFar+1));
+    S.picks.push({num,mgrIdx:mi,team});
+    S.rosters[mi].push(team);
+  }
+  saveStateWithFeedback();
+  renderDraft();renderRosters();renderStandings();
+  toast('Demo draft complete — 100 picks made');
+}
+
+function demoWeekOnly(){
+  if(!S.picks.length){toast('Run draft demo first');return;}
+  // simulate week 1 with realistic win counts
+  const wkData={};
+  S.managers.forEach((_,i)=>{wkData[i]=DEMO_WEEK_WINS[i];});
+  S.weekResults[1]=wkData;
+  S.currentWeek=1;
+  saveStateWithFeedback();
+  renderStandings();renderScoreboard(1);
+  toast('Week 1 simulated');
+}
+
+function runDemoMode(){
+  if(S.picks.length>0&&!confirm('This will overwrite all existing data with demo data. Continue?'))return;
+  demoDraftOnly();
+  setTimeout(()=>{
+    demoWeekOnly();
+    // also set some postseason demo data
+    S.postseason=[[1,2,1,0,0],[0,1,0,0,0],[2,3,2,1,1],[0,1,0,0,0],[1,2,1,0,0]];
+    saveStateWithFeedback();
+    renderPostseason();
+    toast('Full demo loaded — draft + week 1 + postseason');
+  },500);
+}
+
+function clearDemo(){
+  if(!confirm('Clear all demo data and reset to defaults?'))return;
+  S.picks=[];
+  S.rosters=S.managers.map(()=>[]);
+  S.weekResults={};
+  S.currentWeek=0;
+  S.postseason=S.managers.map(()=>[0,0,0,0,0]);
+  saveStateWithFeedback();
+  renderDraft();renderStandings();renderRosters();renderPostseason();
+  toast('Demo cleared');
+}
+
+function showTab(name,el){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  el.classList.add('active');
+  if(name==='admin')initAdmin();
+  if(name==='scoreboard')renderScoreboard(S.currentWeek);
+  if(name==='postseason')renderPostseason();
+}
+
+// ═══════════════════ INIT ═══════════════════════════════
+// ── Boot: load from Supabase then render everything ─────
+(async()=>{
+  setSyncStatus('saving'); // show connecting state
+  document.getElementById('storage-status').innerHTML='<span style="color:rgba(245,197,24,0.6)">⟳ Connecting to cloud...</span>';
+  S=await loadStateFromDB();
+  setSyncStatus('loaded');
+  renderDraft();renderStandings();renderRosters();
+  // poll for updates every 30s so viewers see live changes without refresh
+  setInterval(async()=>{
+    const fresh=await loadStateFromDB();
+    // only re-render if data actually changed
+    if(JSON.stringify(fresh)!==JSON.stringify(S)){
+      S=fresh;
+      renderDraft();renderStandings();renderRosters();
+      setSyncStatus('loaded');
+    }
+  },30000);
+})();
+</script>
+</body></html>
